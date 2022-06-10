@@ -12,7 +12,7 @@
                 <div class="preview">
                     <h5>PREVIEW</h5>
                     <div class="preview-img">
-                        <img :src="`/img/vanilla-js-tetris/${this.nextTetromino}.jpg`">
+                        <img :src="`img/vanilla-js-tetris/${this.nextTetromino}.jpg`">
                     </div>
                 </div>
                 <div class="score">
