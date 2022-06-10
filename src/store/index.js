@@ -1,12 +1,10 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+    state: {
+        currentNavOption: 'home'
+    },
+    mutations: {},
+    actions: {},
+    modules: {}
 })
