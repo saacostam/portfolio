@@ -1,6 +1,13 @@
 <template>
     <div id="container">
         <div class="game-viewport" v-if="this.gameStarted">
+            <div class="modal-pause" v-if="this.bGameOver">
+                <h4 id="pause-header">PAUSED</h4>
+                <div class="pause-options">
+                    <button><i class="bi bi-arrow-repeat"></i></button>
+                    <button @click="togglePause"><i class="bi bi-play-fill"></i></button>
+                </div>
+            </div>
             <div id="mask"></div>
             <div id="grid">
                 <div v-for="row in this.gridRender" :key="getRandomId(row)" class="row-div">
@@ -24,6 +31,11 @@
                     <div>Keys - Move</div>
                     <div>Z - Rotate</div>
                 </div>
+                <div class="preview">
+                    <button id="pause" @click="togglePause" v-if="!this.bGameOver">PAUSE</button>
+                    <button id="pause" @click="togglePause" v-else>RESUME</button>
+                </div>
+                <h3>TETRIS <i class="bi bi-joystick"></i></h3>
             </div>
         </div>
         <div class="game-menu" v-else>
@@ -91,6 +103,9 @@ export default {
         getRandomId(dummy){
             dummy
             return uniqid();
+        },
+        togglePause(){
+            this.bGameOver = !(this.bGameOver);
         }
     },
     mounted(){
@@ -107,6 +122,10 @@ export default {
 </script>
 
 <style scoped>
+#pause-header{
+    color: white;
+    font-weight: 300;
+}
 .row-div{
     width: 100%;
 }
@@ -131,7 +150,7 @@ export default {
     user-select: none;
     position: relative;
 }
-h1,h5{
+h1,h3,h5{
     text-align: center;
     color: white;
     margin-top: 2rem;
@@ -144,7 +163,7 @@ h1,h5{
 
     animation: size 2s infinite ease-in-out;
 }
-#start{
+#start, #pause{
     border: 1px solid var(--green);
     background-color: #111;
     color: var(--green);
@@ -154,7 +173,7 @@ h1,h5{
     text-align: center;
     width: fit-content;
 }
-#start:hover{
+#start:hover, #pause:hover{
     color: white;
     border-color: white;
     cursor: pointer;
@@ -213,6 +232,43 @@ h1,h5{
     height: 100%;
     position: absolute;
     z-index: 100;
+}
+.modal-pause{
+    padding: 1rem;
+    border: 1px solid white;
+    border-radius: 0.2rem;
+    position: absolute;
+    right: 0; left: 0;
+    margin: 35% auto;
+    background-color: #111;
+    width: fit-content;
+    max-width: 10rem;
+    width: 10rem;
+    text-align: center;
+}
+#pause-header{
+    margin-bottom: 1.5rem;
+}
+.pause-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.pause-options button{
+    border: solid 1px var(--green);
+    border-radius: 50%;
+    padding: 0;margin: 0;
+    color: white;
+    background-color:var(--green);
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2rem;
+    line-height: 1rem;
+    outline: none;
+    cursor: pointer;
+}
+.pause-options button:hover{
+    transform: scale(1.05);
 }
 @media (max-width: 768px) {
     .game-viewport,
