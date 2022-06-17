@@ -96,7 +96,7 @@ nav{
 #brand-name{
     font-size: 1.5rem;
     font-weight: 400;
-    color: var(--green);
+    color: var(--color);
 }
 .nav-menu{
     display: flex;
@@ -119,7 +119,7 @@ nav{
     margin: 0 2rem;
 }
 .nav-menu li.active{
-    border-bottom: var(--green) 3px solid;
+    border-bottom: var(--color) 3px solid;
 }
 .nav-menu li a{
     text-decoration: none;
@@ -127,15 +127,15 @@ nav{
     transition: color 0.2s ease, transform 0.2s ease;
 }
 .nav-menu li a:hover{
-    color: var(--green);
+    color: var(--color);
 }
 .nav-menu li.active a{
-    color: var(--green);
+    color: var(--color);
 }
 button.menu-toggle{
     background: none;
     cursor:pointer;
-    border: 1px solid var(--green);
+    border: 1px solid var(--color);
     border-radius: 0.3rem;
     color: white;
     height: 3rem;
@@ -147,12 +147,12 @@ button.menu-toggle{
 }
 button.menu-toggle:hover,
 button.menu-toggle:active{
-    color: var(--green);
+    color: var(--color);
     transition: transform 0.1s ease-in-out;
 }
 
 button.menu-toggle:active{
-    color: var(--green);
+    color: var(--color);
     transform:translateY(-5px);
 }
 

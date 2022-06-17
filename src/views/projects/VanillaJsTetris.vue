@@ -1,11 +1,12 @@
 <template>
     <div id="container">
         <div class="game-viewport" v-if="this.gameStarted">
-            <div class="modal-pause" v-if="this.bGameOver">
-                <h4 id="pause-header">PAUSED</h4>
+            <div class="modal-pause" v-if="this.state!=='running'">
+                <h4 id="pause-header" v-if="this.state === 'pause'">PAUSED</h4>
+                <h4 id="pause-header" v-if="this.state === 'game over'">GAME OVER</h4>
                 <div class="pause-options">
-                    <button><i class="bi bi-arrow-repeat"></i></button>
-                    <button @click="togglePause"><i class="bi bi-play-fill"></i></button>
+                    <button @click="restart"><i class="bi bi-arrow-repeat"></i></button>
+                    <button @click="togglePause" v-if="this.state!=='game over'"><i class="bi bi-play-fill"></i></button>
                 </div>
             </div>
             <div id="mask"></div>
@@ -32,15 +33,15 @@
                     <div>Z - Rotate</div>
                 </div>
                 <div class="preview">
-                    <button id="pause" @click="togglePause" v-if="!this.bGameOver">PAUSE</button>
-                    <button id="pause" @click="togglePause" v-else>RESUME</button>
+                    <button id="pause" @click="togglePause" v-if="this.state === 'running'">PAUSE</button>
+                    <button id="pause" @click="togglePause" v-else-if="this.state === 'pause'">RESUME</button>
                 </div>
                 <h3>TETRIS <i class="bi bi-joystick"></i></h3>
             </div>
         </div>
         <div class="game-menu" v-else>
             <h1>TETRIS <i class="bi bi-joystick"></i></h1>
-            <div class="menu-message">Press <span style="color: var(--green)">start</span>!</div>
+            <div class="menu-message">Press <span style="color: var(--color)">start</span>!</div>
             <div id="start" @click="setGame">START</div>
             <div class="text-muted text-center">*Keyboard needed!</div>
         </div>
@@ -48,14 +49,14 @@
 </template>
 
 <script>
-import {getTetrominos, keyDownHandler, keyUpHandler, generateGrid, mainGameLoop} from '@/utils/VanillaJsTetris.js'
+import {getTetrominos, keyDownHandler, keyUpHandler, generateGrid, mainGameLoop, restartGame} from '@/utils/VanillaJsTetris.js'
 import uniqid from 'uniqid'
 export default {
     data(){
         return {
             columns: 12,
             rows: 18,
-            bGameOver: true,
+            state: 'game over',
             gameStarted: false,
             score: 0,
             grid: [],
@@ -86,7 +87,7 @@ export default {
             } else if (char == "t") {
                 return "white";
             }else{
-                return 'var(--green)';
+                return 'var(--color)';
             }
         },
         keyUp(event){
@@ -98,14 +99,22 @@ export default {
         setGame(){
             generateGrid.bind(this)();
             this.gameStarted = true;
-            this.bGameOver = false;
+            this.state = 'running';
         },
         getRandomId(dummy){
             dummy
             return uniqid();
         },
         togglePause(){
-            this.bGameOver = !(this.bGameOver);
+            if (this.state === 'pause'){
+                this.state = 'running';
+            }else{
+                this.state = 'pause';
+            }
+        },
+        restart(){
+            restartGame.bind(this)();
+            
         }
     },
     mounted(){
@@ -117,6 +126,9 @@ export default {
         window.clearInterval(this.intervalId);
         window.removeEventListener('keydown', this.keyUp);
         window.removeEventListener('keyup', this.keyDown);
+    },
+    updated(){
+        console.log(this);
     }
 }
 </script>
@@ -164,9 +176,9 @@ h1,h3,h5{
     animation: size 2s infinite ease-in-out;
 }
 #start, #pause{
-    border: 1px solid var(--green);
+    border: 1px solid var(--color);
     background-color: #111;
-    color: var(--green);
+    color: var(--color);
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     margin: 2.5rem auto;
@@ -226,7 +238,7 @@ h1,h3,h5{
 #mask{
     transform: scaleY(0);
     transform-origin: top;
-    background-color: var(--green);
+    background-color: var(--color);
     transition: transform 0.5s ease;
     width: 100%;
     height: 100%;
@@ -242,8 +254,8 @@ h1,h3,h5{
     margin: 35% auto;
     background-color: #111;
     width: fit-content;
-    max-width: 10rem;
-    width: 10rem;
+    max-width: 12rem;
+    width: 12rem;
     text-align: center;
 }
 #pause-header{
@@ -255,11 +267,11 @@ h1,h3,h5{
     justify-content: space-around;
 }
 .pause-options button{
-    border: solid 1px var(--green);
+    border: solid 1px var(--color);
     border-radius: 50%;
     padding: 0;margin: 0;
     color: white;
-    background-color:var(--green);
+    background-color:var(--color);
     width: 2.5rem;
     height: 2.5rem;
     font-size: 2rem;

@@ -142,7 +142,7 @@ function checkTetris() {
 }
 
 function mainGameLoop() {
-    if (!this.bGameOver) {
+    if (this.state === 'running') {
         // Timing
         this.ticks++;
         this.gridRender = deepCopyGrid(this.grid);
@@ -193,7 +193,7 @@ function mainGameLoop() {
         if (this.bQueuedTetris[0] && !this.countDown) { this.countDown = 10; }
 
         if (!checkMovement.bind(this)(this.xPosition, this.yPosition, this.nTetromino, this.nRotation)) {
-            this.bGameOver = true;
+            this.state = 'game over';
         }
 
         // Render Output
@@ -203,4 +203,9 @@ function mainGameLoop() {
     }
 }
 
-export { getTetrominos, keyDownHandler, keyUpHandler, generateGrid, mainGameLoop }
+function restartGame(){
+    generateGrid.bind(this)();
+    this.state = 'running';
+}
+
+export { getTetrominos, keyDownHandler, keyUpHandler, generateGrid, mainGameLoop, restartGame }

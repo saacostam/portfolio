@@ -31,7 +31,7 @@ export default {
 <style scoped>
 .card{
     background-color: #111;
-    border: 1px var(--green) solid;
+    border: 1px var(--color) solid;
     height: 100%;
 
     transition: transform 0.5s ease;
@@ -42,7 +42,7 @@ export default {
     transform: scaleY(0);
     /* transform-origin: top; */
     overflow: hidden;
-    background-color: var(--green);
+    background-color: var(--color);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -75,7 +75,7 @@ h2{
     margin-bottom: 1.5rem;
 }
 .icon{
-    border: 2px var(--green) solid;
+    border: 2px var(--color) solid;
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
@@ -101,9 +101,9 @@ h2{
 .tech span{
     display: inline-block;
     font-size: 1rem;
-    color: var(--green);
+    color: var(--color);
     padding: 0 0.3rem;
-    border: 1px solid var(--green);
+    border: 1px solid var(--color);
     border-radius: 0.5rem;
     margin: 0 0.2rem 0.3rem;
 }

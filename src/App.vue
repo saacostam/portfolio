@@ -19,6 +19,6 @@ body{
   font-size: 1.3rem;
 }
 :root{
-  --green:#60BF9C;
+  --color: #4985ff;
 }
 </style>

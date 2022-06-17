@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <!-- <HeroVue/> -->
     <div class="container">
       <div class="row mb-5">
         <h4>MAIN PROJECTS</h4>
@@ -13,16 +12,14 @@
 </template>
 
 <script>
-// import HeroVue from '../components/home/Hero.vue'
 import projects from '@/db/projects.js'
 import ProjectVue from '@/components/home/Project.vue'
 export default {
   components:{
-    // HeroVue,
     ProjectVue
   },
   data(){
-    const nProjects = 2;
+    const nProjects = 3;
     projects.sort((project)=>{return project.rating});
     return {
       projects:projects.slice(0, nProjects)
