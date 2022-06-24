@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="container">
-      <h4>Main Projects</h4>
+      <h3>Main Projects</h3>
       <div class="row">
         <div class="row justify-content-center">
           <ProjectVue v-for="project in projects" :key="project.id" :project="project"/>
@@ -29,9 +29,9 @@ export default {
 </script>
 
 <style scoped>
-h4{
+h3{
   text-align: center;
-  margin-bottom: 3rem;
+  margin: 3rem 0;
 }
 #description{
   background-color: var(--blue);

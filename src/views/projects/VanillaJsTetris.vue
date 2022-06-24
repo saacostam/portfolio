@@ -149,6 +149,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content:center;
+    margin-top: 3rem;
 }
 #grid{
     max-width: 300px;

@@ -47,7 +47,7 @@ export default {
     background: linear-gradient(160deg, var(--blue) 40%, white 40%);
 }
 .myCard .mask{
-    transform-origin: bottom;
+    transform-origin: top;
     transform: scaleY(0);
     /* transform-origin: top; */
     overflow: hidden;
