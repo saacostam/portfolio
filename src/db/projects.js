@@ -1,17 +1,18 @@
-const projects = [{
+const projects = [
+    {
         id: 0,
-        name: 'Medirec',
-        desc: 'A web application that enables users to share medical files with doctors',
+        name: 'Fake Store',
+        desc: 'A front-end application that uses mock-data from fakestoreapi.com',
         tech: ['front', 'vue'],
         rating: 5,
-        image: 'img/tetris.png',
-        link: '',
+        image: 'img/fake-store.png',
+        link: 'https://saacostam.github.io/fake-store/#/explore',
     },
     {
         id: 1,
         name: 'Tetris',
-        desc: 'A Tetris clone built only using HTML, CSS and Javascript',
-        tech: ['front', 'javascript', 'html', 'css'],
+        desc: 'A Tetris clone built using Vue',
+        tech: ['front', 'vue'],
         rating: 5,
         image: 'img/tetris.png',
         link: '/vanilla-js-tetris',

@@ -20,7 +20,7 @@
                 <div class="preview">
                     <h5>PREVIEW</h5>
                     <div class="preview-img">
-                        <img :src="`img/vanilla-js-tetris/${this.nextTetromino}.jpg`">
+                        <img :src="`img/vanilla-js-tetris/${this.nextTetromino}.png`">
                     </div>
                 </div>
                 <div class="score">
@@ -41,7 +41,7 @@
         </div>
         <div class="game-menu" v-else>
             <h1>TETRIS <i class="bi bi-joystick"></i></h1>
-            <div class="menu-message">Press <span style="color: var(--color)">start</span>!</div>
+            <div class="menu-message">Press <span style="color: var(--orange)">start</span>!</div>
             <div id="start" @click="setGame">START</div>
             <div class="text-muted text-center">*Keyboard needed!</div>
         </div>
@@ -81,13 +81,13 @@ export default {
     methods:{
         returnColor(char){
             if (char == "_") {
-                return "#333";
+                return "var(--white)";
             } else if (char == "b") {
-                return "white";
+                return "var(--blue)";
             } else if (char == "t") {
-                return "white";
+                return "#fa9451";
             }else{
-                return 'var(--color)';
+                return 'var(--orange)';
             }
         },
         keyUp(event){
@@ -142,7 +142,6 @@ export default {
     width: 100%;
 }
 .square-div{
-    border: solid 1px #111;
     box-sizing: border-box;
     float:left;
 }
@@ -164,11 +163,11 @@ export default {
 }
 h1,h3,h5{
     text-align: center;
-    color: white;
+    color: var(--blue);
     margin-top: 2rem;
 }
 .menu-message{
-    color: white;
+    color: var(--black);
     text-align: center;
     margin: 1rem;
     font-size: 1.5rem;
@@ -176,18 +175,18 @@ h1,h3,h5{
     animation: size 2s infinite ease-in-out;
 }
 #start, #pause{
-    border: 1px solid var(--color);
-    background-color: #111;
-    color: var(--color);
+    border: 1px solid var(--blue);
+    background-color: var(--blue);
+    color: var(--white);
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     margin: 2.5rem auto;
     text-align: center;
     width: fit-content;
+    transition: 100ms ease;
 }
 #start:hover, #pause:hover{
-    color: white;
-    border-color: white;
+    transform: scale(1.1);
     cursor: pointer;
 }
 @keyframes size {
@@ -215,7 +214,7 @@ h1,h3,h5{
     align-items: center;
 }
 .score{
-    color: white;
+    color: var(--blue);
     font-weight: 400;
     text-align: center;
     font-size: smaller;
@@ -223,7 +222,7 @@ h1,h3,h5{
 .controls div{
     text-align: center;
     font-size: smaller;
-    color: white;
+    color: var(--blue);
 }
 .text-muted{
     font-size: smaller;
@@ -238,7 +237,7 @@ h1,h3,h5{
 #mask{
     transform: scaleY(0);
     transform-origin: top;
-    background-color: var(--color);
+    background-color: var(--blue);
     transition: transform 0.5s ease;
     width: 100%;
     height: 100%;
@@ -247,12 +246,12 @@ h1,h3,h5{
 }
 .modal-pause{
     padding: 1rem;
-    border: 1px solid white;
+    border: 1px solid var(--black);
     border-radius: 0.2rem;
     position: absolute;
     right: 0; left: 0;
     margin: 35% auto;
-    background-color: #111;
+    background-color: var(--blue);
     width: fit-content;
     max-width: 12rem;
     width: 12rem;
@@ -267,11 +266,11 @@ h1,h3,h5{
     justify-content: space-around;
 }
 .pause-options button{
-    border: solid 1px var(--color);
+    border: solid 1px var(--white);
     border-radius: 50%;
     padding: 0;margin: 0;
-    color: white;
-    background-color:var(--color);
+    color: var(--white);
+    background-color:var(--orange);
     width: 2.5rem;
     height: 2.5rem;
     font-size: 2rem;

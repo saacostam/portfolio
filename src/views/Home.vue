@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="container">
-      <div class="row mb-5">
-        <h4>MAIN PROJECTS</h4>
+      <h4>Main Projects</h4>
+      <div class="row">
         <div class="row justify-content-center">
           <ProjectVue v-for="project in projects" :key="project.id" :project="project"/>
         </div>
@@ -30,10 +30,12 @@ export default {
 
 <style scoped>
 h4{
-  color: white;
-  font-weight: 300;
-  font-size: 2.4rem;
-  width: fit-content;
-  margin: 0.5rem auto 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+#description{
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 0 15rem;
 }
 </style>
