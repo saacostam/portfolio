@@ -1,7 +1,8 @@
 <template>
     <div id="sequencer">
         <div class="menu p-2">
-            <button class="btn btn-primary p-1">Play</button>
+            <button class="btn btn-primary p-1" @click="play(0)">Play</button>
+            <input type="text" style="width:3rem; margin-left:1rem;" v-model="bpm">
         </div>
         <div class="main p-2">
             <div class="piano-roll">
@@ -9,8 +10,10 @@
                     <div class="keys" v-for="(freq, note) in this.notes" :key="note" :style="getKeyStyling(note)">{{note}}</div>
                 </div>
                 <div class="midi-wrapper" ref="pr">
-                    <div class="midi" v-for="(freq, note) in this.notes" :key="note">
-                        <div class="square" v-for="i in this.lastNote"></div>
+                    <div class="midi" v-for="i in this.grid.length">
+                        <div class="square" v-for="j in this.grid[i-1].length" 
+                        @click="toggle(i-1, j-1)" 
+                        :style="[this.grid[i-1][j-1] === false ? 'background-color: inherit' : 'background-color: var(--orange)' ]"></div>
                     </div>
                 </div>
             </div>
@@ -20,19 +23,62 @@
 
 <script>
 import {keyToFreqMappingLite} from '@/db/keyToFreqMapping.js'
-import {getKeyStyling} from '@/utils/Sequencer.js'
+import {getKeyStyling, createOscillator, getNotes} from '@/utils/Sequencer.js'
 export default {
     data(){
+        const notes = keyToFreqMappingLite;
+
+        const n = Object.keys(notes).length;
+        const lastNote = 32;
+        let grid = []
+
+        for (let i=0; i<n; i++){
+            let temp = new Array(lastNote);
+            temp.fill(false);
+            grid.push(temp);
+        }
+
         return {
-            notes: keyToFreqMappingLite,
-            lastNote: 5
+            grid: grid,
+            notes: notes,
+            notesList: Object.values(notes),
+            lastNote: lastNote,
+            bpm: 100,
+            audioContext : new AudioContext(),
+            timeout: null
         }
     },
-    mounted(){
-        this.lastNote = Math.max(5, Math.round(this.$refs.pr.clientWidth/32))
+    unmounted(){
+        if (this.timeout){
+            clearTimeout(this.timeout);
+        }
     },
     methods:{
         getKeyStyling : getKeyStyling,
+        toggle(x, y){
+            this.grid[x][y] = !(this.grid[x][y]);
+        },
+        play(i){
+            if (i===this.grid[0].length){
+                i = 0;
+            }
+
+            const freq = getNotes(3, this.grid, i, this.notesList);
+
+            if (freq[0]){
+                createOscillator(freq[0], this.audioContext, 50, 400, 'sine');
+            }
+            if (freq[1]){
+                createOscillator(freq[1], this.audioContext, 50, 400, 'sine');
+            }
+            if (freq[2]){
+                createOscillator(freq[2], this.audioContext, 50, 400, 'sine');
+            }
+
+            const beat = (1/this.bpm)*60/4;
+
+            this.timeout = setTimeout(this.play.bind(this, i+1), beat*1000);
+        }
     }
 }
 </script>
