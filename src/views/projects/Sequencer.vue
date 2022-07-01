@@ -38,6 +38,8 @@ export default {
             grid.push(temp);
         }
 
+        const ranges = new Array(n);
+
         return {
             grid: grid,
             notes: notes,
@@ -67,12 +69,6 @@ export default {
 
             if (freq[0]){
                 createOscillator(freq[0], this.audioContext, 50, 400, 'sine');
-            }
-            if (freq[1]){
-                createOscillator(freq[1], this.audioContext, 50, 400, 'sine');
-            }
-            if (freq[2]){
-                createOscillator(freq[2], this.audioContext, 50, 400, 'sine');
             }
 
             const beat = (1/this.bpm)*60/4;
