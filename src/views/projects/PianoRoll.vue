@@ -1,7 +1,9 @@
 <template>
     <div id="sequencer">
         <div class="menu p-2">
-            <button class="btn btn-primary p-1" @click="play(0)">Play</button>
+            <button class="btn btn-primary p-1" @click="play(0)">
+                <i class="bi bi-play-fill"></i>
+            </button>
             <input type="text" style="width:3rem; margin-left:1rem;" v-model="bpm">
         </div>
         <div class="main p-2">
@@ -10,11 +12,12 @@
                     <div class="keys" v-for="(freq, note) in this.notes" :key="note" :style="getKeyStyling(note)">{{note}}</div>
                 </div>
                 <div class="midi-wrapper" ref="pr">
-                    <div class="midi" v-for="i in this.grid.length">
-                        <div class="square" v-for="j in this.grid[i-1].length" 
-                        @click="toggle(i-1, j-1)" 
-                        :style="[this.grid[i-1][j-1] === false ? 'background-color: inherit' : 'background-color: var(--orange)' ]"></div>
+                    <div class="midi" v-for="i in this.notesList.length">
+                        <div class="square" v-for="j in this.lastNote" @click="addNote" :data-x="i-1" :data-y="j-1"></div>
                     </div>
+
+
+                    <Note v-for="note in this.inputs" width=2 height=2 :noteState="note" />
                 </div>
             </div>
         </div>
@@ -24,7 +27,11 @@
 <script>
 import {keyToFreqMappingLite} from '@/db/keyToFreqMapping.js'
 import {getKeyStyling, createOscillator, getNotes} from '@/utils/Sequencer.js'
+import Note from '@/components/piano-roll/Note.vue'
 export default {
+    components:{
+        Note
+    },
     data(){
         const notes = keyToFreqMappingLite;
 
@@ -41,13 +48,20 @@ export default {
         const ranges = new Array(n);
 
         return {
-            grid: grid,
             notes: notes,
             notesList: Object.values(notes),
             lastNote: lastNote,
             bpm: 100,
             audioContext : new AudioContext(),
-            timeout: null
+            timeout: null,
+
+            inputs: [
+                {
+                    id: 0,
+                    start:{x:0, y:0},
+                    end:{x:6, y:5}
+                }
+            ]
         }
     },
     unmounted(){
@@ -57,23 +71,12 @@ export default {
     },
     methods:{
         getKeyStyling : getKeyStyling,
-        toggle(x, y){
-            this.grid[x][y] = !(this.grid[x][y]);
-        },
-        play(i){
-            if (i===this.grid[0].length){
-                i = 0;
-            }
+        addNote: (event)=>{
+            const x = Number(event.srcElement.dataset.x);
+            const y = Number(event.srcElement.dataset.y);
+            console.log(x,y);
 
-            const freq = getNotes(3, this.grid, i, this.notesList);
-
-            if (freq[0]){
-                createOscillator(freq[0], this.audioContext, 50, 400, 'sine');
-            }
-
-            const beat = (1/this.bpm)*60/4;
-
-            this.timeout = setTimeout(this.play.bind(this, i+1), beat*1000);
+            this.inputs.push()
         }
     }
 }
@@ -104,10 +107,12 @@ export default {
     height: 2rem;
     width: 4rem;
     padding: 0 0.5rem;
-    border: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
 }
 .midi-wrapper{
-    width: calc(100% - 4rem)
+    width: calc(100% - 4rem);
+    position: relative;
 }
 .midi{
     height: 2rem;
@@ -115,8 +120,10 @@ export default {
     flex-direction: row;
 }
 .square{
-    border: 1px solid black;
-    background-color: var(--black);
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
     min-width: 2rem;
+    box-sizing: border-box;
 }
+
 </style>
