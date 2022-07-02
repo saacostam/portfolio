@@ -9,15 +9,17 @@
         <div class="main p-2">
             <div class="piano-roll">
                 <div class="key-wrapper">
-                    <div class="keys" v-for="(freq, note) in this.notes" :key="note" :style="getKeyStyling(note)">{{note}}</div>
+                    <div class="keys" v-for="(freq, note) in this.notes" @contextmenu.prevent
+                    :key="note" :style="getKeyStyling(note)">{{note}}</div>
                 </div>
                 <div class="midi-wrapper" ref="pr">
                     <div class="midi" v-for="i in this.notesList.length">
-                        <div class="square" v-for="j in this.lastNote" @click="addNote" :data-x="i-1" :data-y="j-1"></div>
+                        <div class="square" v-for="j in this.lastNote" @click="addNote($event)" 
+                        @contextmenu.prevent
+                        :data-x="j-1" :data-y="i-1"></div>
                     </div>
 
-
-                    <Note v-for="note in this.inputs" width=2 height=2 :noteState="note" />
+                    <Note v-for="note in this.inputs" width=2 height=2 :noteState="note" @contextmenu="eraseNote(note.id, $event)"/>
                 </div>
             </div>
         </div>
@@ -27,6 +29,7 @@
 <script>
 import {keyToFreqMappingLite} from '@/db/keyToFreqMapping.js'
 import {getKeyStyling, createOscillator, getNotes} from '@/utils/Sequencer.js'
+import { v4 as uuidv4 } from 'uuid';
 import Note from '@/components/piano-roll/Note.vue'
 export default {
     components:{
@@ -54,14 +57,7 @@ export default {
             bpm: 100,
             audioContext : new AudioContext(),
             timeout: null,
-
-            inputs: [
-                {
-                    id: 0,
-                    start:{x:0, y:0},
-                    end:{x:6, y:5}
-                }
-            ]
+            inputs: []
         }
     },
     unmounted(){
@@ -71,12 +67,23 @@ export default {
     },
     methods:{
         getKeyStyling : getKeyStyling,
-        addNote: (event)=>{
+        addNote(event){
             const x = Number(event.srcElement.dataset.x);
             const y = Number(event.srcElement.dataset.y);
-            console.log(x,y);
-
-            this.inputs.push()
+            this.inputs.push({
+                id: uuidv4(),
+                start: {x, y},
+                end:{x,y}
+            })
+        },
+        eraseNote(id, event){
+            event.preventDefault();
+            for (let i=0; i<this.inputs.length; i++){
+                if (this.inputs[i].id === id){
+                    this.inputs.splice(i, 1);
+                    return
+                }
+            }
         }
     }
 }
