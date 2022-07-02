@@ -1,9 +1,12 @@
 <template>
-    <div class="note" :style="getNotePositioning()"  @dragstart="setDrag" draggable="true">
+    <div class="note" :style="getNotePositioning()">
         <div class="start" @drag.prevent="resizeLeft" draggable="true" 
         @dragend.prevent="restartResizeState"
         @dragstart="setDragLeft">|</div>
-        <div class="fill"><i class="bi bi-grip-vertical"></i></div>
+        <div class="fill">
+            <i class="bi bi-grip-vertical"
+            @dragstart="setDrag" draggable="true"></i>
+        </div>
         <div class="end" @drag.prevent="resizeRight" draggable="true" 
         @dragend.prevent="restartResizeState"
         @dragstart="setDragRight">|</div>
@@ -80,6 +83,9 @@ export default {
             this.dragRight = this.dragLeft = false;
         },
         setDrag(e){
+            const image = new Image(0,0);
+            image.src = 'svg/arrows-move.svg';
+            e.dataTransfer.setDragImage( image , 8, 8);
             e.dataTransfer.setData("id",this.noteState.id);
         }
     }
@@ -94,8 +100,8 @@ export default {
     border-bottom: 1px solid black;
     border-right: 1px solid black;
     border-radius: 0.5rem;
-    background-color: var(--orange);
-    cursor: move;
+    background-color: rgb(244, 39, 74);
+    pointer-events:none;
 }
 .start, .end{
     max-width: 8px;
@@ -106,10 +112,20 @@ export default {
     background-color: inherit;
     filter: brightness(92%);
     border-radius: 0.5rem;
+    pointer-events:all;
 }
 .fill{
     flex: 1;
-    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+}
+.bi-grip-vertical{
+    cursor:grab;
+    pointer-events:all;
+}
+.bi-grip-vertical:drag{
+    cursor:grabbing;
 }
 .wrapper{
     background-color: inherit;

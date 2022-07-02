@@ -126,9 +126,6 @@ export default {
         window.clearInterval(this.intervalId);
         window.removeEventListener('keydown', this.keyUp);
         window.removeEventListener('keyup', this.keyDown);
-    },
-    updated(){
-        console.log(this);
     }
 }
 </script>

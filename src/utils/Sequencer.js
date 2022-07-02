@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 function getKeyStyling(note){
     if (note.length === 2 ){
         return 'background-color: var(--white); color: var(--black);'
@@ -41,4 +43,78 @@ function getNotes(nNotes, grid, i, freq){
     return notes;
 }
 
-export {getKeyStyling, createOscillator, getNotes}
+function eraseNote(id, event){
+    event.preventDefault();
+    for (let i=0; i<this.inputs.length; i++){
+        if (this.inputs[i].id === id){
+            this.inputs.splice(i, 1);
+            return
+        }
+    }
+}
+
+function addNote(event){
+    const x = Number(event.srcElement.dataset.x);
+    const y = Number(event.srcElement.dataset.y);
+    this.inputs.push({
+        id: uuidv4(),
+        start: {x, y},
+        end:{x:x+this.lastDuration,y}
+    })
+}
+
+function resizeNote(id, bUpdateStart, newX){
+    let index = null;
+    for (let i=0; i<this.inputs.length; i++){
+        if (this.inputs[i].id === id){
+            index = i;
+            break
+        }
+    }
+
+    if (index !== null){
+        if (bUpdateStart) {
+            if (newX <= this.inputs[index].end.x){
+                this.inputs[index].start.x = newX;
+            }
+        }
+        else { 
+            if (newX >= this.inputs[index].start.x){
+                this.inputs[index].end.x = newX;
+            }
+        }
+        this.lastDuration = this.inputs[index].end.x - this.inputs[index].start.x;
+    }
+}
+
+function moveNote(id, startX, startY){
+    let index = null;
+    for (let i=0; i<this.inputs.length; i++){
+        if (this.inputs[i].id === id){
+            index = i;
+            break
+        }
+    }
+
+    if (index !== null){
+        this.lastDuration = this.inputs[index].end.x - this.inputs[index].start.x;
+        this.inputs[index].start.x = startX;
+        this.inputs[index].end.x = startX + this.lastDuration;
+        this.inputs[index].start.y = this.inputs[index].end.y = startY;
+    }
+}
+
+function handleDrop(e){
+    const type = e.dataTransfer.getData("type");
+
+    if (type == "resize"){
+        const id = e.dataTransfer.getData("id");
+        const direction = e.dataTransfer.getData("dir");
+        this.resizeNote(id, direction === "left", Number(e.target.dataset.x))
+    }else{
+        const id = e.dataTransfer.getData("id");
+        this.moveNote(id, Number(e.target.dataset.x), Number(e.target.dataset.y))
+    }
+}
+
+export {getKeyStyling, createOscillator, getNotes, eraseNote, addNote, resizeNote, moveNote, handleDrop}
