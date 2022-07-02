@@ -15,8 +15,9 @@
                 <div class="midi-wrapper" ref="pr">
                     <div class="midi" v-for="i in this.notesList.length">
                         <div class="square" v-for="j in this.lastNote" @click="addNote($event)" 
-                        @contextmenu.prevent
-                        :data-x="j-1" :data-y="i-1"></div>
+                        @contextmenu.prevent :data-x="j-1" :data-y="i-1"
+                        @drop="handleDrop"
+                        @dragover.prevent @dragenter.prevent></div>
                     </div>
 
                     <Note v-for="note in this.inputs" width=2 height=2 :noteState="note" @contextmenu="eraseNote(note.id, $event)"/>
@@ -57,7 +58,11 @@ export default {
             bpm: 100,
             audioContext : new AudioContext(),
             timeout: null,
-            inputs: []
+            inputs: [
+                {id: uuidv4(),
+                start:{x:5, y:5},
+                end:{x:7, y:5}}
+            ]
         }
     },
     unmounted(){
@@ -84,6 +89,10 @@ export default {
                     return
                 }
             }
+        },
+        handleDrop(e){
+            const id = e.dataTransfer.getData("id");
+            console.log(id);
         }
     }
 }

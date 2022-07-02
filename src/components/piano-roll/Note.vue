@@ -1,11 +1,11 @@
 <template>
     <div class="note" :style="getNotePositioning()" draggable="true">
-        <div class="start" @drag.prevent="resizeLeft" draggable="true" 
-        @dragend.prevent="restartResizeState"
+        <div class="start" @drag="resizeLeft" draggable="true" 
+        @dragend="restartResizeState"
         @dragstart="setDrag">|</div>
         <div class="fill"></div>
-        <div class="end" @drag.prevent="resizeRight" draggable="true" 
-        @dragend.prevent="restartResizeState"
+        <div class="end" @drag="resizeRight" draggable="true" 
+        @dragend="restartResizeState"
         @dragstart="setDrag">|</div>
         <div class="note wrapper" v-if="dragLeft || dragRight" :style="getWrapperStyling()"></div>
     </div>
@@ -25,6 +25,11 @@ export default {
     methods:{
         getNotePositioning(){
             const input = this.noteState;
+            if (this.dragLeft||this.dragRight){
+                return `top:${input.start.y*this.height}rem; left:${input.start.x*this.width}rem;
+                width: ${(input.end.x - input.start.x+1)*this.width}rem; height: ${this.height}rem;
+                visibility:hidden;`
+            }
             return `top:${input.start.y*this.height}rem; left:${input.start.x*this.width}rem;
             width: ${(input.end.x - input.start.x+1)*this.width}rem; height: ${this.height}rem;`
         },
@@ -33,15 +38,16 @@ export default {
             let widthOffset = 0;
             const input = this.noteState;
 
-            console.log(this.event.offsetX);
             if (this.dragLeft){
-                widthOffset = this.event.offsetX/this.width/16;
+                widthOffset = -this.event.offsetX/this.width/16;
+                startOffset = this.event.offsetX/this.width/8;
             }else if (this.dragRight){
                 widthOffset = this.event.offsetX/this.width/16;
             }
 
-            return `top:0rem; left:0rem;
-            width: ${(input.end.x - input.start.x+1 + widthOffset)*this.width}rem; height: ${this.height}rem;`
+            return `top:0rem; left:${startOffset}rem;
+            width: ${(input.end.x - input.start.x+1 + widthOffset)*this.width}rem; height: ${this.height}rem;
+            visibility: visible;`
         },
         getEmptyImage() {
             const dragImg = new Image(0,0);
@@ -50,6 +56,7 @@ export default {
         },
         setDrag(e){
             e.dataTransfer.setDragImage(this.getEmptyImage(), 0, 0);
+            e.dataTransfer.setData("id",this.noteState.id);
         },
         resizeLeft(e){
             this.dragLeft = true;
@@ -61,9 +68,9 @@ export default {
             this.event = e;
             this.temp = this.nodeState;
         },
-        restartResizeState(){
+        restartResizeState(e){
             this.dragRight = this.dragLeft = false;
-        },
+        }
     }
 }
 </script>
@@ -77,6 +84,7 @@ export default {
     border-right: 1px solid black;
     border-radius: 0.5rem;
     background-color: var(--orange);
+    cursor: move;
 }
 .start, .end{
     max-width: 8px;
@@ -95,5 +103,6 @@ export default {
     background-color: inherit;
     border-radius: 0.4rem;
     filter: brightness(110%);
+    pointer-events: none;
 }
 </style>
