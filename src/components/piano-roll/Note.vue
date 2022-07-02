@@ -1,9 +1,13 @@
 <template>
     <div class="note" :style="getNotePositioning()" draggable="true">
-        <div class="start" @drag.prevent="resizeLeft" draggable="true">|</div>
+        <div class="start" @drag.prevent="resizeLeft" draggable="true" 
+        @dragend.prevent="restartResizeState"
+        @dragstart="setDrag">|</div>
         <div class="fill"></div>
-        <div class="end" @drag.prevent="resizeRight" draggable="true">|</div>
-        <div class="start wrapper" v-if="drag" :style="getWrapperStyling()"></div>
+        <div class="end" @drag.prevent="resizeRight" draggable="true" 
+        @dragend.prevent="restartResizeState"
+        @dragstart="setDrag">|</div>
+        <div class="note wrapper" v-if="dragLeft || dragRight" :style="getWrapperStyling()"></div>
     </div>
 </template>
 
@@ -12,9 +16,10 @@ export default {
     props:['width', 'height', 'noteState'],
     data(){
         return {
-            drag: false,
-            offsetX: 0,
-            temp: false,
+            dragLeft: false,
+            dragRight: false,
+            event: 0,
+            temp: {},
         }
     },
     methods:{
@@ -24,18 +29,41 @@ export default {
             width: ${(input.end.x - input.start.x+1)*this.width}rem; height: ${this.height}rem;`
         },
         getWrapperStyling(){
+            let startOffset = 0;
+            let widthOffset = 0;
             const input = this.noteState;
-            return `top:${input.start.y*this.height}rem; left:${input.start.x*this.width}rem;
-            width: ${(input.end.x - input.start.x+1)*this.width}rem; height: ${this.height}rem;`
+
+            console.log(this.event.offsetX);
+            if (this.dragLeft){
+                widthOffset = this.event.offsetX/this.width/16;
+            }else if (this.dragRight){
+                widthOffset = this.event.offsetX/this.width/16;
+            }
+
+            return `top:0rem; left:0rem;
+            width: ${(input.end.x - input.start.x+1 + widthOffset)*this.width}rem; height: ${this.height}rem;`
+        },
+        getEmptyImage() {
+            const dragImg = new Image(0,0);
+            dragImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+            return dragImg;
+        },
+        setDrag(e){
+            e.dataTransfer.setDragImage(this.getEmptyImage(), 0, 0);
         },
         resizeLeft(e){
-            this.drag = true;
-            this.offsetX = e.offsetX;
+            this.dragLeft = true;
+            this.event = e;
+            this.temp = this.nodeState;
         },
         resizeRight(e){
-            this.drag = true;
-            this.offsetX = e.offsetX;
-        }
+            this.dragRight = true;
+            this.event = e;
+            this.temp = this.nodeState;
+        },
+        restartResizeState(){
+            this.dragRight = this.dragLeft = false;
+        },
     }
 }
 </script>
@@ -64,6 +92,8 @@ export default {
     flex: 1;
 }
 .wrapper{
-    position: absolute;
+    background-color: inherit;
+    border-radius: 0.4rem;
+    filter: brightness(110%);
 }
 </style>
