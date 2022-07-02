@@ -1,12 +1,12 @@
 <template>
-    <div class="note" :style="getNotePositioning()" draggable="true">
-        <div class="start" @drag="resizeLeft" draggable="true" 
-        @dragend="restartResizeState"
-        @dragstart="setDrag">|</div>
+    <div class="note" :style="getNotePositioning()"  @dragstart="setDrag" draggable="true">
+        <div class="start" @drag.prevent="resizeLeft" draggable="true" 
+        @dragend.prevent="restartResizeState"
+        @dragstart="setDragLeft">|</div>
         <div class="fill"></div>
-        <div class="end" @drag="resizeRight" draggable="true" 
-        @dragend="restartResizeState"
-        @dragstart="setDrag">|</div>
+        <div class="end" @drag.prevent="resizeRight" draggable="true" 
+        @dragend.prevent="restartResizeState"
+        @dragstart="setDragRight">|</div>
         <div class="note wrapper" v-if="dragLeft || dragRight" :style="getWrapperStyling()"></div>
     </div>
 </template>
@@ -54,9 +54,17 @@ export default {
             dragImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
             return dragImg;
         },
-        setDrag(e){
+        setDragRight(e){
             e.dataTransfer.setDragImage(this.getEmptyImage(), 0, 0);
             e.dataTransfer.setData("id",this.noteState.id);
+            e.dataTransfer.setData("type", "resize");
+            e.dataTransfer.setData("dir", "right");
+        },
+        setDragLeft(e){
+            e.dataTransfer.setDragImage(this.getEmptyImage(), 0, 0);
+            e.dataTransfer.setData("id",this.noteState.id);
+            e.dataTransfer.setData("type", "resize");
+            e.dataTransfer.setData("dir", "left");
         },
         resizeLeft(e){
             this.dragLeft = true;
@@ -70,6 +78,9 @@ export default {
         },
         restartResizeState(e){
             this.dragRight = this.dragLeft = false;
+        },
+        setDrag(e){
+            e.dataTransfer.setData("id",this.noteState.id);
         }
     }
 }
@@ -104,5 +115,6 @@ export default {
     border-radius: 0.4rem;
     filter: brightness(110%);
     pointer-events: none;
+    z-index: 10;
 }
 </style>

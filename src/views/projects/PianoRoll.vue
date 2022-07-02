@@ -1,3 +1,5 @@
+<!-- check size bounds -->
+
 <template>
     <div id="sequencer">
         <div class="menu p-2">
@@ -90,9 +92,32 @@ export default {
                 }
             }
         },
+        resizeNote(id, bUpdateStart, newX){
+            let index = null;
+            for (let i=0; i<this.inputs.length; i++){
+                if (this.inputs[i].id === id){
+                    index = i;
+                    break
+                }
+            }
+
+            if (index !== null){
+                if (bUpdateStart)   { this.inputs[index].start.x = newX;}
+                else                { this.inputs[index].end.x = newX }
+            }
+        },
         handleDrop(e){
-            const id = e.dataTransfer.getData("id");
-            console.log(id);
+            const type = e.dataTransfer.getData("type");
+
+            if (type == "resize"){
+                const id = e.dataTransfer.getData("id");
+                const direction = e.dataTransfer.getData("dir");
+                this.resizeNote(id, direction === "left", Number(e.target.dataset.x))
+            }else{
+                const id = e.dataTransfer.getData("id");
+                console.log(id);
+                console.log(e);
+            }
         }
     }
 }
