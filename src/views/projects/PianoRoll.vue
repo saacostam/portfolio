@@ -1,7 +1,7 @@
 <template>
     <div id="sequencer">
         <div class="menu p-2">
-            <button class="btn btn-primary p-1" @click="play(0)">
+            <button class="btn btn-primary p-1" @click="togglePlay">
                 <i class="bi bi-play-fill"></i>
             </button>
             <input type="text" style="width:3rem; margin-left:1rem;" v-model="bpm">
@@ -37,17 +37,23 @@ export default {
     },
     data(){
         const notes = keyToFreqMappingLite;
-        const lastNote = 60;
+        const notesList = Object.values(notes);
+        const lastNote = 32;
+        let audioContext = new Array(notesList.length);
+        for (let i = 0; i<audioContext.length; i++){
+            audioContext[i] = new AudioContext();
+        }
 
         return {
             notes: notes,
-            notesList: Object.values(notes),
+            notesList,
             lastNote: lastNote,
             bpm: 128,
-            audioContext : new AudioContext(),
+            audioContext:audioContext,
             timeout: null,
             inputs: [],
-            lastDuration: 0
+            lastDuration: 0,
+            playing : false
         }
     },
     unmounted(){
@@ -61,7 +67,30 @@ export default {
         addNote,
         resizeNote,
         moveNote, 
-        handleDrop
+        handleDrop,
+        getNotes,
+        togglePlay(){
+            if (!this.playing){
+                this.playing = true;
+                this.play(0);
+            }else{
+                this.playing = false;
+            }
+        },
+        play(x){
+            if (this.playing){
+                const notes = this.getNotes(x);
+                const ms = 1/(this.bpm/60)*1000/4;
+                
+                notes.forEach((note) => {
+                    const ms = 1/(this.bpm/60)*1000/4;
+                    createOscillator(this.notesList[note.note], this.audioContext[note.note], 30, ms*(note.duration+1),'square');
+                })
+
+                const nextX = (x+1)%this.lastNote;
+                this.timeout = setTimeout(this.play.bind(this, nextX), ms)
+            }
+        }
     }
 }
 </script>

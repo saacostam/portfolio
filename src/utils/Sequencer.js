@@ -15,6 +15,7 @@ function createOscillator(freq, audioContext, attack, decay, type) {
     gain.connect(audio.destination);
     gain.gain.setValueAtTime(0, audio.currentTime);
     gain.gain.linearRampToValueAtTime(1, audio.currentTime + attack / 1000);
+    gain.gain.setTargetAtTime(0.5, audio.currentTime + attack / 1000, audio.currentTime + decay / 1000);
     gain.gain.linearRampToValueAtTime(0, audio.currentTime + decay / 1000);
 
     osc.frequency.value = freq;
@@ -29,18 +30,21 @@ function createOscillator(freq, audioContext, attack, decay, type) {
     }, decay)
 }
 
-function getNotes(nNotes, grid, i, freq){
-    let notes = []
-    for (let j = 0; j<grid.length; j++){
-        if (grid[j][i] === true){
-            notes.push(freq[j]);
+function getNotes(x){
+    let index = sortedIndexForObjectId(this.inputs, x);
+    let resp = []
+    
+    if (!this.inputs){return []};
 
-            if (notes.length === nNotes){
-                return notes;
-            }
-        }
+    while (this.inputs[index] && this.inputs[index].start.x === x){
+        resp.push({
+            note: this.inputs[index].start.y,
+            duration: this.inputs[index].end.x - this.inputs[index].start.x
+        })
+
+        index+=1;
     }
-    return notes;
+    return resp;
 }
 
 function eraseNote(id, event){
@@ -53,14 +57,34 @@ function eraseNote(id, event){
     }
 }
 
+function sortedIndexForObjectId(array, newX) {
+    var low = 0,
+        high = array.length;
+
+    while (low < high) {
+        var mid = (low + high) >>> 1;
+        if (array[mid].start.x < newX) low = mid + 1;
+        else high = mid;
+    }
+    return low;
+}
+
+function insert(element, array, index) {
+    array.splice(index , 0, element);
+    return array;
+}
+
 function addNote(event){
     const x = Number(event.srcElement.dataset.x);
     const y = Number(event.srcElement.dataset.y);
-    this.inputs.push({
+
+    const sortedIndex = sortedIndexForObjectId(this.inputs, x);
+
+    insert({
         id: uuidv4(),
         start: {x, y},
         end:{x:x+this.lastDuration,y}
-    })
+    }, this.inputs, sortedIndex);
 }
 
 function resizeNote(id, bUpdateStart, newX){
@@ -71,19 +95,25 @@ function resizeNote(id, bUpdateStart, newX){
             break
         }
     }
-
+    
     if (index !== null){
+        const newEntry = this.inputs[index];
+
         if (bUpdateStart) {
-            if (newX <= this.inputs[index].end.x){
-                this.inputs[index].start.x = newX;
-            }
+            if (newX <= newEntry.end.x){
+                newEntry.start.x = newX;
+            }else{return};
         }
         else { 
-            if (newX >= this.inputs[index].start.x){
-                this.inputs[index].end.x = newX;
-            }
+            if (newX >= newEntry.start.x){
+                newEntry.end.x = newX;
+            }else{return};
         }
-        this.lastDuration = this.inputs[index].end.x - this.inputs[index].start.x;
+        this.lastDuration = newEntry.end.x - newEntry.start.x;
+
+        this.inputs.splice(index, 1);
+        const sortedIndex = sortedIndexForObjectId(this.inputs, newEntry.start.x);
+        insert(newEntry, this.inputs, sortedIndex);
     }
 }
 
@@ -97,10 +127,16 @@ function moveNote(id, startX, startY){
     }
 
     if (index !== null){
-        this.lastDuration = this.inputs[index].end.x - this.inputs[index].start.x;
-        this.inputs[index].start.x = startX;
-        this.inputs[index].end.x = startX + this.lastDuration;
-        this.inputs[index].start.y = this.inputs[index].end.y = startY;
+        const newEntry = this.inputs[index];
+
+        this.lastDuration = newEntry.end.x - newEntry.start.x;
+        newEntry.start.x = startX;
+        newEntry.end.x = startX + this.lastDuration;
+        newEntry.start.y = newEntry.end.y = startY;
+
+        this.inputs.splice(index, 1);
+        const sortedIndex = sortedIndexForObjectId(this.inputs, newEntry.start.x);
+        insert(newEntry, this.inputs, sortedIndex);
     }
 }
 
