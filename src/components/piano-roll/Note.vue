@@ -3,7 +3,7 @@
         <div class="start" @drag.prevent="resizeLeft" draggable="true" 
         @dragend.prevent="restartResizeState"
         @dragstart="setDragLeft">|</div>
-        <div class="fill"></div>
+        <div class="fill"><i class="bi bi-grip-vertical"></i></div>
         <div class="end" @drag.prevent="resizeRight" draggable="true" 
         @dragend.prevent="restartResizeState"
         @dragstart="setDragRight">|</div>
@@ -109,6 +109,7 @@ export default {
 }
 .fill{
     flex: 1;
+    vertical-align: middle;
 }
 .wrapper{
     background-color: inherit;

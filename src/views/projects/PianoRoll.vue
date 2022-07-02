@@ -60,11 +60,7 @@ export default {
             bpm: 100,
             audioContext : new AudioContext(),
             timeout: null,
-            inputs: [
-                {id: uuidv4(),
-                start:{x:5, y:5},
-                end:{x:7, y:5}}
-            ]
+            inputs: []
         }
     },
     unmounted(){
@@ -106,6 +102,22 @@ export default {
                 else                { this.inputs[index].end.x = newX }
             }
         },
+        moveNote(id, startX, startY){
+            let index = null;
+            for (let i=0; i<this.inputs.length; i++){
+                if (this.inputs[i].id === id){
+                    index = i;
+                    break
+                }
+            }
+
+            if (index !== null){
+                const delta = this.inputs[index].end.x - this.inputs[index].start.x;
+                this.inputs[index].start.x = startX;
+                this.inputs[index].end.x = startX + delta;
+                this.inputs[index].start.y = this.inputs[index].end.y = startY;
+            }
+        }, 
         handleDrop(e){
             const type = e.dataTransfer.getData("type");
 
@@ -115,8 +127,7 @@ export default {
                 this.resizeNote(id, direction === "left", Number(e.target.dataset.x))
             }else{
                 const id = e.dataTransfer.getData("id");
-                console.log(id);
-                console.log(e);
+                this.moveNote(id, Number(e.target.dataset.x), Number(e.target.dataset.y))
             }
         }
     }
