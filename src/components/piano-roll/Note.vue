@@ -100,7 +100,7 @@ export default {
     border-bottom: 1px solid black;
     border-right: 1px solid black;
     border-radius: 0.5rem;
-    background-color: rgb(244, 39, 74);
+    background-color: rgb(39, 244, 104);
     pointer-events:none;
 }
 .start, .end{

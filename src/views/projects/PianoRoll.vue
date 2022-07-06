@@ -1,9 +1,8 @@
 <template>
     <div id="sequencer">
         <div class="menu p-2">
-            <button class="btn btn-primary p-1" @click="togglePlay">
-                <i class="bi bi-play-fill"></i>
-            </button>
+            <button class="btn btn-primary p-1" @click="togglePlay" v-if="this.playing">Pause</button>
+            <button class="btn btn-primary p-1" @click="togglePlay" v-else>Play</button>
             <input type="text" style="width:3rem; margin-left:1rem;" v-model="bpm">
         </div>
         <div class="main p-2">
@@ -18,6 +17,10 @@
                         @contextmenu.prevent :data-x="j-1" :data-y="i-1"
                         @drop="handleDrop"
                         @dragover.prevent @dragenter.prevent></div>
+                        
+                        <div class="vertical-line" 
+                            :style=" `left: ${2*((this.x+1)%this.lastNote)}rem; transition: linear ${1/(this.bpm/60)/4}s;` " 
+                            v-if="this.playing"></div>
                     </div>
 
                     <Note v-for="note in this.inputs" width=2 height=2 :noteState="note" @contextmenu="eraseNote(note.id, $event)"/>
@@ -53,7 +56,8 @@ export default {
             timeout: null,
             inputs: [],
             lastDuration: 0,
-            playing : false
+            playing : false,
+            x:0
         }
     },
     unmounted(){
@@ -79,12 +83,14 @@ export default {
         },
         play(x){
             if (this.playing){
+                this.x = x;
+
                 const notes = this.getNotes(x);
                 const ms = 1/(this.bpm/60)*1000/4;
                 
                 notes.forEach((note) => {
                     const ms = 1/(this.bpm/60)*1000/4;
-                    createOscillator(this.notesList[note.note], this.audioContext[note.note], 30, ms*(note.duration+1),'square');
+                    createOscillator(this.notesList[note.note], this.audioContext[note.note], 30, ms*(note.duration+1),'sine');
                 })
 
                 const nextX = (x+1)%this.lastNote;
@@ -138,5 +144,9 @@ export default {
     min-width: 2rem;
     box-sizing: border-box;
 }
-
+.vertical-line{
+    position: absolute;
+    border: 1px solid var(--orange);
+    height: 2em;
+}
 </style>
