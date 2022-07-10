@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    props:['width', 'height', 'noteState'],
+    props:['width', 'height', 'noteState', 'color'],
     data(){
         return {
             dragLeft: false,
@@ -31,10 +31,11 @@ export default {
             if (this.dragLeft||this.dragRight){
                 return `top:${input.start.y*this.height}rem; left:${input.start.x*this.width}rem;
                 width: ${(input.end.x - input.start.x+1)*this.width}rem; height: ${this.height}rem;
-                visibility:hidden;`
+                visibility:hidden; background-color: ${this.color};`
             }
             return `top:${input.start.y*this.height}rem; left:${input.start.x*this.width}rem;
-            width: ${(input.end.x - input.start.x+1)*this.width}rem; height: ${this.height}rem;`
+            width: ${(input.end.x - input.start.x+1)*this.width}rem; height: ${this.height}rem;
+            background-color: ${this.color};`
         },
         getWrapperStyling(){
             let startOffset = 0;
@@ -100,7 +101,6 @@ export default {
     border-bottom: 1px solid black;
     border-right: 1px solid black;
     border-radius: 0.5rem;
-    background-color: rgb(39, 244, 104);
     pointer-events:none;
 }
 .start, .end{
