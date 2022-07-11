@@ -1,8 +1,8 @@
 <template>
     <div id="sequencer">
         <div class="menu p-2">
-            <div class="name d-none d-md-block mr-1 mr-md-4" style="font-weight: 600; font-size: 1.2rem; color:white;">
-                <i class="bi bi-music-note"></i> PIANO ROLL
+            <div class="name d-none d-md-block mr-1 mr-md-4" style="font-weight: 600; font-size: 1.1rem; color:white;">
+                <i class="bi bi-music-note d-none d-lg-inline"></i> PIANO ROLL
             </div>
 
             <div class="mr-1 mr-md-2">
@@ -35,7 +35,7 @@
 
             <div class=" d-none d-md-flex mr-1 mr-md-2 align-items-center">
                 <div class="text-white" style="display:flex; align-items: center; padding: 0.5rem;font-size: 1.4rem;">
-                    <i class="bi bi-paint-bucket"></i>
+                    <i class="bi bi-paint-bucket d-none d-lg-inline"></i>
                 </div>
                 <input type="color" id="noteColor" v-model="color">
             </div>
@@ -134,6 +134,16 @@
 
         </div>
         <div class="main p-2">
+            <div class="examples pb-1">
+                <h6 class="text-white text-center">QUICK EXAMPLES</h6>
+                <button class="btn btn-danger" @click="upload('mario')">
+                    <i class="bi bi-dice-4-fill"></i> MARIO
+                </button>
+                <button class="btn btn-danger" @click="upload('tetris')">
+                    <i class="bi bi-joystick"></i> TETRIS
+                </button>
+            </div>
+
             <div class="piano-roll">
                 <div class="key-wrapper">
                     <div class="keys" v-for="(freq, note) in this.notes" @contextmenu.prevent
@@ -162,6 +172,7 @@
 <script>
 import {keyToFreqMappingLite} from '@/db/keyToFreqMapping.js'
 import {getKeyStyling, createOscillator, getNotes, eraseNote, addNote, resizeNote, moveNote, handleDrop} from '@/utils/Sequencer.js'
+import {marioTheme, tetrisTheme} from '@/db/piano-roll'
 import Note from '@/components/piano-roll/Note.vue'
 export default {
     components:{
@@ -279,7 +290,15 @@ export default {
             }.bind(this);
             reader.readAsText(file);
         },
-        upload(){
+        upload(target){
+            if (target){
+                if (target === 'mario'){
+                    this.uploadedFile = marioTheme;
+                }else if (target === 'tetris'){
+                    this.uploadedFile = tetrisTheme;
+                }
+            }
+
             if (this.uploadedFile.inputs || this.uploadedFile.beats || this.uploadedFile.bpm || this.uploadedFile.color || this.uploadedFile.waveTypeIndex || this.uploadedFile.attack){
                 this.inputs = this.uploadedFile.inputs;
                 this.beats = this.uploadedFile.beats
@@ -307,7 +326,7 @@ export default {
     align-items: center;
 }
 .main{
-    height: calc(100vh - 7rem);
+    height: calc(100vh - 9.5rem);
 }
 .piano-roll{
     border: solid 1px white;
@@ -369,5 +388,16 @@ export default {
 }
 #nameInput:focus{
     outline: none;
+}
+.examples{
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    height: 2.5rem;
+}
+.examples button{ 
+    font-size: 0.8rem;
+    padding: 0.2rem;
+    margin: 0.4rem;
 }
 </style>
