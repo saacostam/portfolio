@@ -135,7 +135,7 @@
         </div>
         <div class="main p-2">
             <div class="examples pb-1">
-                <h6 class="text-white text-center">QUICK EXAMPLES</h6>
+                <h6 class="text-white text-center mr-2">CHECK A QUICK EXAMPLE</h6>
                 <button class="btn btn-danger" @click="upload('mario')">
                     <i class="bi bi-dice-4-fill"></i> MARIO
                 </button>

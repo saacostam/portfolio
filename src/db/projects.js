@@ -17,6 +17,15 @@ const projects = [
         image: 'img/tetris.png',
         link: '/vanilla-js-tetris',
     },
+    {
+        id: 2,
+        name: 'Piano Roll',
+        desc: 'A functional Piano Roll for web music prototyping',
+        tech: ['front', 'vue'],
+        rating: 3,
+        image: 'img/piano-roll.png',
+        link: '/piano-roll',
+    },
 ]
 
 export default projects;
