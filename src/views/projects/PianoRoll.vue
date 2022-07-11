@@ -24,15 +24,17 @@
                 <button class="btn btn-success btn-play" @click="updateBeats(-1)">
                     <i class="bi bi-dash"></i>
                 </button>
-                <div class="text-white" style="display:flex; align-items: center; padding: 0.5rem;">{{this.beats}} beats</div>
+                <div class="text-white" style="display:flex; align-items: center; padding: 0.5rem; white-space: nowrap; text-overflow: ellipsis;">
+                    {{this.beats}} beats
+                </div>
                 <button class="btn btn-success btn-play" @click="updateBeats(1)">
                     <i class="bi bi-plus"></i>
                 </button>
             </div>
 
 
-            <div class="d-flex mr-1 mr-md-2 align-items-center">
-                <div class="text-white d-none d-md-block" style="display:flex; align-items: center; padding: 0.5rem;font-size: 1.4rem;">
+            <div class=" d-none d-md-flex mr-1 mr-md-2 align-items-center">
+                <div class="text-white" style="display:flex; align-items: center; padding: 0.5rem;font-size: 1.4rem;">
                     <i class="bi bi-paint-bucket"></i>
                 </div>
                 <input type="color" id="noteColor" v-model="color">
@@ -68,9 +70,68 @@
                 </div>
             </div>
 
-            <button id="download" class="btn btn-success" style="margin-right: 0rem;" @click="download">
+            <!-- Upload Modal -->
+            <button id="download" class="btn btn-success" style="margin-right: 1rem;" 
+                    data-toggle="modal" data-target="#uploadModal">
+                <i class="bi bi-file-earmark-arrow-up"></i>
+            </button>
+            <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="uploadModalLabel">Upload Song</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="text-white">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-4">Only .json files are supported.</div>
+                            <div class="d-flex flex-row">
+                                <input type="file" id="fileInput" v-on:change="uploadFile($event)">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" @click="upload">
+                                Upload<i class="bi bi-file-earmark-arrow-up ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Upload Modal -->
+
+            <!-- Download Modal -->
+            <button id="download" class="btn btn-success" style="margin-right: 0rem;" 
+                    data-toggle="modal" data-target="#downloadModal">
                 <i class="bi bi-download"></i>
             </button>
+            <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="downloadModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="downloadModal">Download Song</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="text-white">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex flex-row">
+                                <span class="mr-2">Name: </span>
+                                <input type="text" id="nameInput" v-model="name">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" @click="download">
+                                Download<i class="bi bi-download ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Download Modal -->
+
         </div>
         <div class="main p-2">
             <div class="piano-roll">
@@ -131,6 +192,8 @@ export default {
             waveTypeIndex: 0,
             possibleWaveTypes: ['sine', 'square', 'sawtooth', 'triangle'],
             attack: 30,
+            name: 'untitled',
+            uploadedFile: null
         }
     },
     unmounted(){
@@ -196,8 +259,35 @@ export default {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent( JSON.stringify(downloadObject) );
             const dlAnchorElem = document.createElement('a');
             dlAnchorElem.setAttribute("href",     dataStr     );
-            dlAnchorElem.setAttribute("download", "scene.json");
+            dlAnchorElem.setAttribute("download", `${this.name}.json`);
             dlAnchorElem.click();
+        },
+        uploadFile(e){
+            const allowedExtensions = /(\.json)$/i;
+            const file = e.target.files[0] || null;
+
+            if (!file){return}
+            if (!allowedExtensions.exec(file.name)) {
+                alert('Invalid file type');
+                e.srcElement.value = null;
+                return
+            }
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                this.uploadedFile = JSON.parse(reader.result);
+            }.bind(this);
+            reader.readAsText(file);
+        },
+        upload(){
+            if (this.uploadedFile.inputs || this.uploadedFile.beats || this.uploadedFile.bpm || this.uploadedFile.color || this.uploadedFile.waveTypeIndex || this.uploadedFile.attack){
+                this.inputs = this.uploadedFile.inputs;
+                this.beats = this.uploadedFile.beats
+                this.bpm = this.uploadedFile.bpm
+                this.color = this.uploadedFile.color
+                this.waveTypeIndex = this.uploadedFile.waveTypeIndex
+                this.attack = this.uploadedFile.attack
+            }
         }
     }
 }
@@ -266,5 +356,18 @@ export default {
 #noteColor{
     width: 2rem;
     height: 2rem;
+}
+.modal-header, .modal-footer{
+    border: none;
+}
+#nameInput{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    flex: 1;
+}
+#nameInput:focus{
+    outline: none;
 }
 </style>
