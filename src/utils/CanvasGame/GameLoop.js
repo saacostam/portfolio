@@ -121,8 +121,6 @@ function checkMaze(){
 }
 
 function renderMaze(){
-    const tileImage = new Image(this.scale, this.scale);
-    tileImage.src = 'img/canvas-game/grass-tile.png';
     for (let i =0; i<this.width; i++){
         for (let j=0; j<this.height; j++){
             if (this.blocks[i][j] === 1){
