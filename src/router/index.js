@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '@/views/Home.vue'
 import VanillaJsTetris from '@/views/projects/VanillaJsTetris.vue'
 import PianoRoll from '@/views/projects/PianoRoll.vue'
-import CanvasGame from '@/views/projects/CanvasGame.vue'
+import RandomMazeGenerator from '@/views/projects/RandomMazeGenerator.vue'
 
 const routes = [{
         path: '/',
@@ -21,9 +21,9 @@ const routes = [{
         component: PianoRoll
     },
     {
-        path: '/canvas-game',
-        name: 'CanvasGame',
-        component: CanvasGame
+        path: '/random-maze-generator',
+        name: 'RandomMazeGenerator',
+        component: RandomMazeGenerator
     }
 ]
 

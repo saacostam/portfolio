@@ -4,7 +4,7 @@ const projects = [
         name: 'Fake Store',
         desc: 'A front-end application that uses mock-data from fakestoreapi.com',
         tech: ['front', 'vue'],
-        rating: 5,
+        rating: 4.5,
         image: 'img/fake-store.png',
         link: 'https://saacostam.github.io/fake-store/#/explore',
     },
@@ -13,7 +13,7 @@ const projects = [
         name: 'Tetris',
         desc: 'A Tetris clone built using Vue',
         tech: ['front', 'vue'],
-        rating: 5,
+        rating: 3.8,
         image: 'img/tetris.png',
         link: '/vanilla-js-tetris',
     },
@@ -22,10 +22,19 @@ const projects = [
         name: 'Piano Roll',
         desc: 'A functional Piano Roll for web music prototyping',
         tech: ['front', 'vue'],
-        rating: 3,
+        rating: 4.0,
         image: 'img/piano-roll.png',
         link: '/piano-roll',
     },
+    {
+        id:3,
+        name: 'Random Maze Generator',
+        desc: 'A game with randomly generated mazes and path validation.',
+        tech: ['game', 'vue', 'algorithms'],
+        rating: 2.8,
+        image: 'img/random-maze-generator.png',
+        link: '/random-maze-generator'
+    }
 ]
 
 export default projects;

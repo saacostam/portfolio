@@ -2,6 +2,7 @@
     <div class="canvas-game">
         <h3 class="m-4">Random Maze Generator</h3>
         <canvas ref="canvas" id="canvas" v-show="!this.gameOver"></canvas>
+        <p class="text-center m-2" style="font-size: 1.3rem;" v-show="!this.gameOver">Use the arrow keys to move. Get to the <b style="color:var(--success)">exit</b>.</p>
         <button id="toMenu" class="m-2" v-show="!this.gameOver" @click="backToMenu"><h5>Back to Menu</h5></button>
 
         <div style="width: 400px;" v-show="this.gameOver">
@@ -10,7 +11,7 @@
                 <button @click="startEasyMode" class="btn btn-success">Easy Mode</button>
                 <button @click="startHardMode" class="btn btn-danger">Hard Mode</button>
             </div>
-            <p class="text-center">This web application uses probability to build a maze. Each cell has an independent probability of being either filled or empty. It is always guaranteed, using a DFS search algorithm, that there is a valid solution.</p>
+            <p class="text-center">This game uses probability to build a maze. Each cell has an independent probability of being either filled or empty. It is always guaranteed, using a DFS search algorithm, that there is a valid solution.</p>
         </div>
     </div>
 </template>
@@ -64,9 +65,13 @@ export default {
     flex-direction: column;
     align-items: center;
 }
+@media (min-width: 1000px) {
+    #canvas{
+        width: 800px;
+        height: 400px;
+    }
+}
 #canvas{
-    width: 800px;
-    height: 400px;
     background-color: #ffffff;
 
     image-rendering: pixelated;

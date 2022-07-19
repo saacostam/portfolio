@@ -18,9 +18,11 @@ export default {
   },
   data(){
     const nProjects = 3;
-    projects.sort((project)=>{return project.rating});
+    const sortedProjects = projects.sort(function(a,b){
+      return b.rating - a.rating;
+    });
     return {
-      projects:projects.slice(0, nProjects)
+      projects: sortedProjects.slice(0, nProjects)
     }
   }
 }
