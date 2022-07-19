@@ -6,7 +6,7 @@
                 {{project.desc}}
             </div>
             <div class="p-4">
-                <img :src="project.image" :alt="project.name" class="img-fluid">
+                <img :src="`${project.image}`" :alt="project.name" class="img-fluid p-3">
                 <h2>{{project.name}}</h2>
                 <div class="tech">
                     <span v-for="technology in project.tech" :key="technology">{{technology.toUpperCase()}}</span>

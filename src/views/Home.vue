@@ -2,10 +2,8 @@
   <div class="home">
     <div class="container">
       <h3>Main Projects</h3>
-      <div class="row">
-        <div class="row justify-content-center">
-          <ProjectVue v-for="project in projects" :key="project.id" :project="project"/>
-        </div>
+      <div class="row justify-content-center">
+        <ProjectVue v-for="project in projects" :key="project.id" :project="project"/>
       </div>
     </div>
   </div>
