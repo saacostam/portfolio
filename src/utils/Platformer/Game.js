@@ -12,27 +12,36 @@ class Game{
         this.level = settings.level || '';
 
         // Specific Stuff
-        this.playerX = this.levelWidth/2;
+        this.playerX = 1;
         this.playerY = this.levelHeight-2;
 
         this.playerVelocityX = 0;
         this.playerVelocityY = 0;
 
+        this.gravity = -0.5;
+
+        this.onFloor = true;
+
         this.onUserCreate();
     }
 
     onUserCreate(){
-        for (let i=0; i<9; i++){
-            this.level += '#..............................#';
-        }
-        
-        this.level += '#..............................#';   // 1
-        this.level += '#.............................##';   // 2
-        this.level += '#............................###';   // 3
-        this.level += '#...........................####';   // 4
-        this.level += '#...........###............#####';   // 5
-        this.level += '#.........................######';   // 6
-        this.level += '################################';   // 7
+        this.level += '################################';
+        this.level += '#..............................#';
+        this.level += '#.######################.......#';
+        this.level += '#.#....................##......#';
+        this.level += '#.#.......................###..#';
+        this.level += '#.#...............##..........##';
+        this.level += '#.#..............##....#########';
+        this.level += '#.#.............##.............#';
+        this.level += '#.#............##..............#';
+        this.level += '###..##..##..###.......######..#';
+        this.level += '####..................##......##';
+        this.level += '#####................##......###';
+        this.level += '######..##..##..##..##......####';
+        this.level += '#..........................#####';
+        this.level += '#.........................######';
+        this.level += '################################';
     }
 
     getTile(x, y){
@@ -46,12 +55,12 @@ class Game{
 
     onUserUpdate(isKeyboardPressed){
         // Handle Input
-        this.playerVelocityY = 0;
 
         if (isKeyboardPressed['ArrowUp']){
-            this.playerVelocityY -= 1;
-        }else if (isKeyboardPressed['ArrowDown']){
-            this.playerVelocityY += 1;
+            if (this.onFloor === true){
+                this.playerVelocityY -= 5;
+                this.onFloor = false;
+            }
         }
 
         if (isKeyboardPressed['ArrowLeft']){
@@ -63,48 +72,52 @@ class Game{
         // Physics
 
         this.playerVelocityX = 0.9*this.playerVelocityX;
+        this.playerVelocityY -= this.gravity;
 
-        if (this.playerVelocityX < -0.5)
-            this.playerVelocityX = -0.5;
-        if (0.5 < this.playerVelocityX)
-            this.playerVelocityX = 0.5;
+        if (this.playerVelocityX < -0.6)
+            this.playerVelocityX = -0.6;
+        if (0.6 < this.playerVelocityX)
+            this.playerVelocityX = 0.6;
         
         if (this.playerVelocityY < -1)
-            this.playerVelocityY = -0.3;
+            this.playerVelocityY = -1;
         if (1 < this.playerVelocityY)
-            this.playerVelocityY = 0.3;
+            this.playerVelocityY = 1;
 
         if (Math.abs(this.playerVelocityX) < 0.1){
             this.playerVelocityX = 0;
         }
 
         // Test Collisions
+        this.onFloor = false;
+
         let newPlayerX = this.playerX + this.playerVelocityX;
         let newPlayerY = this.playerY + this.playerVelocityY;
 
         if (0 < this.playerVelocityX){ // Derecha
-            if (this.getTile(newPlayerX+1, this.playerY) !== '.'){
+            if (this.getTile(newPlayerX+1, this.playerY) !== '.' || this.getTile(newPlayerX+1, this.playerY+0.99) !== '.'){
                 this.playerX = newPlayerX = Math.floor(newPlayerX);
                 this.playerVelocityX = 0;
             }
         }
 
         if (this.playerVelocityX < 0){ // Izquierda
-            if (this.getTile(newPlayerX, this.playerY) !== '.'){
+            if (this.getTile(newPlayerX, this.playerY) !== '.' || this.getTile(newPlayerX, this.playerY+0.99) !== '.'){
                 this.playerX = newPlayerX = Math.floor(newPlayerX + 1);
                 this.playerVelocityX = 0;
             }
         }
 
-        if (0 < this.playerVelocityY){ // Arriba
-            if (this.getTile(newPlayerX, newPlayerY) !== '.'){
-                this.playerY = Math.floor(newPlayerY - 1);
+        if (0 < this.playerVelocityY){ // Abajo
+            if (this.getTile(newPlayerX, newPlayerY+1) !== '.' || this.getTile(newPlayerX+0.99, newPlayerY+1) !== '.'){
+                this.playerY = Math.floor(newPlayerY);
                 this.playerVelocityY = 0;
+                this.onFloor = true;
             }
         }
 
-        if (this.playerVelocityY < 0){ // Abajo
-            if (this.getTile(newPlayerX, newPlayerY) !== '.'){
+        if (this.playerVelocityY < 0){ // Arriba
+            if (this.getTile(newPlayerX, newPlayerY) !== '.' || this.getTile(newPlayerX+0.99, newPlayerY) !== '.'){
                 this.playerY = Math.floor(newPlayerY + 1);
                 this.playerVelocityY = 0;
             }
@@ -124,14 +137,14 @@ class Game{
 
                 switch (tile){
                     case '#':
-                        this.ctx.fillStyle = 'black';
+                        this.ctx.fillStyle = 'blue';
                         this.ctx.fillRect(this.scale*x, this.scale*y, this.scale, this.scale);
                 }
             }
         }
 
         // Render Player
-        this.ctx.fillStyle = 'green';
+        this.ctx.fillStyle = 'red';
         this.ctx.fillRect(this.scale*this.playerX, this.scale*this.playerY, this.scale, this.scale)
     }
 }

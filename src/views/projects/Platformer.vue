@@ -60,7 +60,7 @@ export default{
     padding: 2rem;
 }
 #canvas{
-    background-color: dodgerblue;
+    background-color: rgb(60, 60, 60);
     image-rendering: pixelated;
     width: 50rem;
 }
