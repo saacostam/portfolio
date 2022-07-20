@@ -1,6 +1,6 @@
 <template>
     <div id="platformer">
-        <canvas ref="canvas" id="canvas"></canvas>
+        <canvas ref="canvas" id="canvas" width="256" height="128"></canvas>
     </div>
 </template>
 
@@ -29,7 +29,11 @@ export default{
         this.game = new Game({
             ctx: this.ctx,
             width: canvas.width,
-            height: canvas.height
+            height: canvas.height,
+            levelWidth: 32, 
+            levelHeight: 16,
+            scale: 8,
+            fps: 24
         })
         this.setEventListeners();
         this.update();
