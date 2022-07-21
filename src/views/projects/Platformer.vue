@@ -1,5 +1,6 @@
 <template>
     <div id="platformer">
+        <h3 class="text-white text-center mb-4">🏔️ Slippery Slope ⛷️</h3>
         <canvas ref="canvas" id="canvas" width="256" height="128"></canvas>
     </div>
 </template>
@@ -55,12 +56,14 @@ export default{
 <style scoped>
 #platformer{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    background-color: var(--black);
 }
 #canvas{
-    background-color: rgb(60, 60, 60);
+    background-color: rgb(84, 142, 212);
     image-rendering: pixelated;
     width: 50rem;
 }

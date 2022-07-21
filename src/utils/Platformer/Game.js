@@ -137,15 +137,22 @@ class Game{
 
                 switch (tile){
                     case '#':
-                        this.ctx.fillStyle = 'blue';
+                        this.ctx.fillStyle = 'white';
                         this.ctx.fillRect(this.scale*x, this.scale*y, this.scale, this.scale);
                 }
             }
         }
 
         // Render Player
-        this.ctx.fillStyle = 'red';
-        this.ctx.fillRect(this.scale*this.playerX, this.scale*this.playerY, this.scale, this.scale)
+        this.ctx.fillStyle = 'darkOrange';
+        // this.ctx.fillRect(this.scale*this.playerX, this.scale*this.playerY, this.scale, this.scale);
+        const playerSprite = new Image(16, 16);
+        playerSprite.src = 'img/slippery-slope/player.png';
+        this.ctx.drawImage(
+            playerSprite,
+            Math.round(this.scale * this.playerX),
+            Math.round(this.scale * this.playerY),
+        )
     }
 }
 

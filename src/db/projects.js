@@ -12,7 +12,7 @@ const projects = [
         id: 1,
         name: 'Tetris',
         desc: 'A Tetris clone built using Vue',
-        tech: ['front', 'vue'],
+        tech: ['game', 'front', 'vue'],
         rating: 3.8,
         image: 'img/tetris.png',
         link: '/vanilla-js-tetris',
@@ -30,7 +30,7 @@ const projects = [
         id:3,
         name: 'Random Maze Generator',
         desc: 'A game with randomly generated mazes and path validation.',
-        tech: ['game', 'vue', 'algorithms'],
+        tech: ['game', 'front', 'vue', 'algorithms'],
         rating: 2.8,
         image: 'img/random-maze-generator.png',
         link: '/random-maze-generator'
