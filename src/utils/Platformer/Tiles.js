@@ -1,3 +1,5 @@
+import {topSprite, flagSprite} from '@/utils/Platformer/Sprites.js'
+
 class Tile{
     constructor(img, sx, sy){
         this.img = img;
@@ -10,7 +12,7 @@ class Tile{
         // under the specified scale.
 
         ctx.drawImage(
-            topSprite,  // img - HtmlImageElement
+            this.img,  // img - HtmlImageElement
             this.sx*scale,      // sx - Subrectangle X
             this.sy*scale,          // sy - Subrectangle Y
             scale,      // sWidth - Subrectangle Width
@@ -22,3 +24,20 @@ class Tile{
         )
     }
 }
+
+const tiles = {
+    snow: {
+        leftXtopY: new Tile(topSprite, 0, 0),
+        centerXtopY: new Tile(topSprite, 1, 0),
+        rightXtopY: new Tile(topSprite, 2, 0),
+        leftXcenterY: new Tile(topSprite, 0, 1),
+        centerXcenterY: new Tile(topSprite, 1, 1),
+        rightXcenterY: new Tile(topSprite, 2, 1),
+        leftXbottomY: new Tile(topSprite, 0, 2),
+        centerXbottomY: new Tile(topSprite, 1, 2),
+        rightXbottomY: new Tile(topSprite, 2, 2)
+    },
+    flag: new Tile(flagSprite, 0, 0)
+}
+
+export {tiles, Tile};

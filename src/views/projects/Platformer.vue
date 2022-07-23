@@ -34,7 +34,7 @@ export default{
             levelWidth: 32, 
             levelHeight: 16,
             scale: 8,
-            fps: 24
+            fps: 27
         })
         this.setEventListeners();
         this.update();
