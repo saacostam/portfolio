@@ -63,7 +63,8 @@ export default{
     background-color: var(--black);
 }
 #canvas{
-    background-color: rgb(84, 142, 212);
+    background-color: rgb(103, 139, 183);
+    background-size: cover;
     image-rendering: pixelated;
     width: 50rem;
 }
