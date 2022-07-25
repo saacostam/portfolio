@@ -1,4 +1,4 @@
-import {topSprite, flagSprite} from '@/utils/Platformer/Sprites.js'
+import {topSprite, flagSprite, keySprite, brickSprite} from '@/utils/Platformer/Sprites.js'
 
 class Tile{
     constructor(img, sx, sy){
@@ -37,7 +37,9 @@ const tiles = {
         centerXbottomY: new Tile(topSprite, 1, 2),
         rightXbottomY: new Tile(topSprite, 2, 2)
     },
-    flag: new Tile(flagSprite, 0, 0)
+    flag: new Tile(flagSprite, 0, 0),
+    key: new Tile(keySprite, 0, 0),
+    brick: new Tile(brickSprite, 0, 0)
 }
 
 export {tiles, Tile};
