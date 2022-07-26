@@ -1,30 +1,38 @@
 <template>
     <div id="platformer">
         <h3 class="text-white text-center mb-4 h3">🏔️ Slippery Slope 🐧</h3>
-        <canvas ref="canvas" id="canvas" width="256" height="128" v-show="!this.game.gameOver"></canvas>
+        <div id="canvas-wrapper">
+            <button class="btn btn-danger nav-button" @click="gameOver" v-show="!this.game.gameOver"><i class="bi bi-house-fill"></i></button>
+            <div id="canvas-instruction" v-if="this.instruction" v-show="!this.game.gameOver">
+                {{this.instruction}}
+            </div>
+            <canvas ref="canvas" id="canvas" width="256" height="128" v-show="!this.game.gameOver"></canvas>
+        </div>
         
         <div id="ui-wrapper" v-show="this.game.gameOver">
-            <div id="ui" v-if="!this.inMenu" style="background: url('img/slippery-slope/menu.png');background-repeat: no-repeat;background-size: contain;">
+            <div id="ui" v-if="!this.inMenu">
                 <button class="btn btn-danger abs-button" id="play-button" @click="toggleMenu">PLAY</button>
             </div>
-            <div id="ui" v-else style="background: linear-gradient(180deg, rgba(103,139,183,1) 0%, rgba(167,181,198,1) 100%);">
-                <button class="btn btn-danger nav-button" @click="toggleMenu"><i class="bi bi-house-fill"></i></button>
+            <div id="ui" v-else>
+                <button class="btn btn-danger nav-button" @click="toggleMenu"><i class="bi bi-caret-left-fill"></i></button>
 
                 <div id="ui-levels">
-                    <button class="btn btn-primary level-button" v-for="i in 8" @click="startLevel(i-1)">{{i}}</button>
+                    <button class="btn btn-primary level-button" v-for="i in 8" @click="startLevel(i-1)"
+                    :class="{'disabled btn-danger':(i-1)>this.currentLevel[0], 'btn-success':(i-1) < this.currentLevel[0]}">{{i}}</button>
                 </div>
 
-                <div class="menu-instruction text-white">Choose a <span class="text-primary">level</span>!</div>
+                <div class="menu-instruction text-white" v-if="this.currentLevel[0] < 8">Choose a <span class="text-primary">level</span>!</div>
+                <div class="menu-instruction text-white" v-else><span class="text-success">Congratulations!</span></div>
             </div>
         </div>
 
         <div class="instructions mt-3 text-white">
             <h3 class="text-center h5">How to Play</h3>
             <ul id="ul-instructions">
-                <li><span class="text-danger">Move</span> and <span class="text-danger">Jump</span> with the <span class="text-danger">keyboards arrows</span>.</li>
-                <li>Use <span class="text-danger">R</span> key to <span class="text-danger">restart</span> the level.</li>
-                <li>Go to the <span class="text-danger">Flag</span>.</li>
-                <li>The <span class="text-danger">red keys eliminate</span>the <span class="text-danger">red bricks</span></li>
+                <li><span class="text-primary">Move</span> and <span class="text-primary">Jump</span> with the <span class="text-primary">keyboards arrows</span>.</li>
+                <li>Use <span class="text-primary">R</span> key to <span class="text-primary">restart</span> the level.</li>
+                <li>Go to the <span class="text-primary">Flag</span>.</li>
+                <li>The <span class="text-primary">red keys eliminate</span> the <span class="text-primary">bricks</span></li>
             </ul>
         </div>
     </div>
@@ -33,6 +41,7 @@
 <script>
 import Game from '@/utils/Platformer/Game.js'
 import { setEventListeners, removeGame } from '@/utils/GameInput.js';
+import levels from '@/utils/Platformer/Levels.js'
 export default{
     name: 'Platformer',
     data(){
@@ -50,11 +59,16 @@ export default{
                 'r': false
             },
             levelNumber: 0,
-            levelPassed: false,
-            inMenu: false
+            currentLevel: [0, false],
+            inMenu: false,
+            instruction: ''
         }
     },
-    mounted(){
+    created(){
+        const currentLevel = parseInt( localStorage.getItem("currentLevel") );
+        if (currentLevel){
+            this.currentLevel[0] = currentLevel;
+        }
     },
     unmounted(){
         this.removeGame();
@@ -63,18 +77,33 @@ export default{
         toggleMenu(){
             this.inMenu = !(this.inMenu);
         },
+        gameOver(){
+            this.game = {
+                gameOver: true
+            }
+            this.currentLevel[1] = false
+        },
         update(){
             if (!this.game.gameOver){
+                this.currentLevel[1] = true;
                 this.game.onUserUpdate(this.isKeyboardPressed);
                 this.timeOut = setTimeout( this.update, 1000/this.game.fps )
             }else{
+                if (this.levelNumber === this.currentLevel[0] && this.currentLevel[1]){
+                    this.currentLevel[0] += 1;
+                    localStorage.setItem("currentLevel", this.currentLevel[0]);
+                }
                 this.game = {
                     gameOver: true
                 }
             }
         },
         startLevel(levelNumber){
+            if (levelNumber > this.currentLevel[0]){return}
+
             this.levelNumber = levelNumber;
+
+            this.instruction = levels[this.levelNumber].instruction || '';
 
             const canvas = this.$refs.canvas;
             this.ctx = canvas.getContext('2d');
@@ -103,7 +132,23 @@ export default{
   font-family: pixelFont;
   src: url('@/../public/fonts/slippery-slope/FreePixel.ttf');
 }
-
+#canvas-wrapper{
+    position: relative;
+}
+#canvas-instruction{
+    position: absolute;
+    width: 24rem;
+    left: calc(50% - (24rem)/2);
+    height: 10%;
+    top: 5%;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    font-size: 1.3rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #platformer{
     display: flex;
     flex-direction: column;
@@ -112,14 +157,25 @@ export default{
     padding: 2rem;
     background-color: var(--black);
     font-family: pixelFont;
+
+    user-select: none;
 }
 #canvas{
-    background: rgb(103,139,183);
-    background: linear-gradient(180deg, rgba(103,139,183,1) 0%, rgba(167,181,198,1) 100%);
     image-rendering: pixelated;
+    /* background: #678bb7;
+    background: linear-gradient(180deg, rgba(103,139,183,1) 0%, rgba(167,181,198,1) 100%); */
+
+    background-color: #678BB7;
+    opacity: 1;
+    background-image:  radial-gradient(#E7E7E7 1.8px, transparent 1.8px), radial-gradient(#E7E7E7 1.8px, #678BB7 1.8px);
+    background-size: 72px 72px;
+    background-position: 0 0,36px 36px;
 }
 #ui-wrapper, #canvas, .instructions{
     width: 50rem;
+}
+.disabled{
+    opacity: 1;
 }
 #ui{
     width: 100%;
@@ -127,6 +183,12 @@ export default{
     background-color: white;
     position: relative;
     image-rendering: pixelated;
+
+    background-color: #678BB7;
+    opacity: 1;
+    background-image:  radial-gradient(#E7E7E7 1.8px, transparent 1.8px), radial-gradient(#E7E7E7 1.8px, #678BB7 1.8px);
+    background-size: 72px 72px;
+    background-position: 0 0,36px 36px;
 }
 .abs-button{
     position: absolute;
@@ -171,10 +233,13 @@ export default{
 .menu-instruction{
     position: absolute;
     bottom: 2rem;
-    left: calc(50% - (10rem)/2);
+    left: calc(50% - (11rem)/2);
     font-size: 1.2rem;
-    width: 10rem;
+    width: 11rem;
     text-align: center;
+
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 1rem;
 }
 .instructions{
     text-align: justify;
@@ -197,6 +262,11 @@ export default{
     #ul-instructions{
         display: block
     }
+    #canvas-instruction{
+        font-size: 1rem;
+        width: 18rem;
+        left: calc(50% - (18rem)/2);
+    }
 }
 @media (max-width: 600px) {
     #ui-wrapper, #canvas, .instructions{
@@ -209,6 +279,11 @@ export default{
     }
     .menu-instruction{
         bottom: 0.5rem;
+    }
+    #canvas-instruction{
+        font-size: 0.7rem;
+        width: 15rem;
+        left: calc(50% - (15rem)/2);
     }
 }
 </style>
