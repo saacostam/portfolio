@@ -13,7 +13,7 @@ const projects = [
         name: 'Tetris',
         desc: 'A Tetris clone built using Vue',
         tech: ['game', 'front', 'vue'],
-        rating: 3.8,
+        rating: 3.5,
         image: 'img/tetris.png',
         link: '/vanilla-js-tetris',
     },
@@ -31,9 +31,18 @@ const projects = [
         name: 'Random Maze Generator',
         desc: 'A game with randomly generated mazes and path validation.',
         tech: ['game', 'front', 'vue', 'algorithms'],
-        rating: 2.8,
+        rating: 2.2,
         image: 'img/random-maze-generator.png',
         link: '/random-maze-generator'
+    },
+    {
+        id:4,
+        name: 'Slippery Slope',
+        desc: 'A platform game built using the Canvas element.',
+        tech: ['game', 'front', 'vue'],
+        rating: 3.6,
+        image: 'img/slippery-slope.png',
+        link: '/slippery-slope'
     }
 ]
 

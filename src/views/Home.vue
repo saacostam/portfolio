@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="container">
-      <h3>Main Projects</h3>
+      <h3>All Projects</h3>
       <div class="row justify-content-center">
         <ProjectVue v-for="project in projects" :key="project.id" :project="project"/>
       </div>
@@ -17,7 +17,7 @@ export default {
     ProjectVue
   },
   data(){
-    const nProjects = 3;
+    const nProjects = 5;
     const sortedProjects = projects.sort(function(a,b){
       return b.rating - a.rating;
     });

@@ -158,6 +158,9 @@ export default{
     background-color: var(--black);
     font-family: pixelFont;
 
+    height: calc(100vh - 4rem);
+    overflow: auto;
+
     user-select: none;
 }
 #canvas{

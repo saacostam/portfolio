@@ -3,7 +3,7 @@ import Home from '@/views/Home.vue'
 import VanillaJsTetris from '@/views/projects/VanillaJsTetris.vue'
 import PianoRoll from '@/views/projects/PianoRoll.vue'
 import RandomMazeGenerator from '@/views/projects/RandomMazeGenerator.vue'
-import Platformer from '@/views/projects/Platformer'
+import SlipperySlope from '@/views/projects/SlipperySlope.vue'
 
 const routes = [{
         path: '/',
@@ -27,9 +27,9 @@ const routes = [{
         component: RandomMazeGenerator
     },
     {
-        path: '/platformer',
-        name: 'Platformer',
-        component: Platformer
+        path: '/slippery-slope',
+        name: 'SlipperySlope',
+        component: SlipperySlope
     }
 ]
 
