@@ -28,7 +28,7 @@ const projects = [
     },
     {
         id:3,
-        name: 'Random Maze Generator',
+        name: 'Random Maze Generator 🕹',
         desc: 'A game with randomly generated mazes and path validation',
         tech: ['game', 'frontend', 'vue', 'algorithms'],
         rating: 2.2,
@@ -47,7 +47,7 @@ const projects = [
     {
         id:5,
         name: '🧠 mem',
-        desc: 'A card-based study application for students',
+        desc: 'A card-based studying application for students',
         tech: ['frontend', 'vue', 'backend', 'nodejs', 'mongodb'],
         rating: 4.6,
         image: 'img/mem.png',
