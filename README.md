@@ -1,4 +1,5 @@
 # portfolio_v1
+This is my portfolio website, where I showcase some of my class, professional and personal projects. 
 
 ### Link - GitHub Pages: 
 https://saacostam.github.io/portfolio/
