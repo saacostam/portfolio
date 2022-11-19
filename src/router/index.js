@@ -5,6 +5,8 @@ import PianoRoll from '@/views/projects/PianoRoll.vue'
 import RandomMazeGenerator from '@/views/projects/RandomMazeGenerator.vue'
 import SlipperySlope from '@/views/projects/SlipperySlope.vue'
 
+import Test from '@/views/projects/Test.vue'
+
 const routes = [{
         path: '/',
         alias: '/home',
@@ -30,6 +32,11 @@ const routes = [{
         path: '/slippery-slope',
         name: 'SlipperySlope',
         component: SlipperySlope
+    },
+    {
+        path: '/test',
+        name: 'Test',
+        component: Test,
     }
 ]
 

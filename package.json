@@ -1,6 +1,6 @@
 {
     "name": "portfolio_v1",
-    "homepage":"https://saacostam.github.io/portfolio",
+    "homepage": "https://saacostam.github.io/portfolio",
     "version": "0.1.0",
     "private": true,
     "scripts": {
