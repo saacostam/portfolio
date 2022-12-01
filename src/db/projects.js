@@ -4,7 +4,7 @@ const projects = [
         name: '🛍️ Fake Store',
         desc: 'A front-end application that uses mock-data from fakestoreapi.com',
         tech: ['frontend', 'vue', 'api'],
-        rating: 4.5,
+        rating: 4.3,
         image: 'img/fake-store.png',
         link: 'https://saacostam.github.io/fake-store/#/explore',
     },
@@ -52,6 +52,24 @@ const projects = [
         rating: 4.6,
         image: 'img/mem.png',
         link: 'https://gentle-dawn-74672.herokuapp.com/#/login'
+    },
+    {
+        id:6,
+        name: '🎵 TuneCode',
+        desc: 'A web based programming language and IDE',
+        tech: ['frontend', 'vue', 'antlr', 'audio API'],
+        rating: 4.6,
+        image: 'img/tunecode.png',
+        link: 'https://saacostam.github.io/music-dsl/#/'
+    },
+    {
+        id:7,
+        name : '🚀 3D Music Visualizer',
+        desc : 'A 3D music visualizer that uses audio API analysis and p5.js with WEBGL',
+        tech : ['frontend', 'audio API', 'WEBGL', 'p5.js'],
+        rating : 4.0,
+        image: 'img/3dmusicvisualizer.png',
+        link: 'https://saacostam.github.io/3d-music-visualizer/',
     }
 ]
 
