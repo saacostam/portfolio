@@ -51,7 +51,7 @@ const projects = [
         tech: ['frontend', 'vue', 'backend', 'nodejs', 'mongodb'],
         rating: 4.6,
         image: 'img/mem.png',
-        link: 'https://gentle-dawn-74672.herokuapp.com/#/login'
+        link: 'https://mem.onrender.com/#/login'
     },
     {
         id:6,
