@@ -39,7 +39,7 @@ const projects = [
         id:4,
         name: '🐧 Slippery Slope',
         desc: 'A platform game built using the Canvas element',
-        tech: ['game', 'frontend', 'vue'],
+        tech: ['game', 'frontend', 'canvas'],
         rating: 3.6,
         image: 'img/slippery-slope.png',
         link: '/slippery-slope'
@@ -60,7 +60,7 @@ const projects = [
         tech: ['frontend', 'vue', 'antlr', 'audio API'],
         rating: 4.6,
         image: 'img/tunecode.png',
-        link: 'https://saacostam.github.io/music-dsl/#/'
+        link: '/tune-code'
     },
     {
         id:7,
@@ -69,7 +69,16 @@ const projects = [
         tech : ['frontend', 'audio API', 'WEBGL', 'p5.js'],
         rating : 4.0,
         image: 'img/3dmusicvisualizer.png',
-        link: 'https://saacostam.github.io/3d-music-visualizer/',
+        link: '/3d-music-visualizer/',
+    },
+    {
+        id:8,
+        name : '✍ Sudoku',
+        desc : 'A sudoku game built using the Canvas element',
+        tech : ['game', 'frontend', 'canvas'],
+        rating : 2.5,
+        image: 'img/sudoku.png',
+        link: '/sudoku',
     }
 ]
 
