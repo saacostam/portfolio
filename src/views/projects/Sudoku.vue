@@ -4,6 +4,7 @@
         <p>This is a project created using the canvas HTML element. It implements a basic sudoku game with:</p>
         <ul>
             <li>Random Level Generation 🕹</li>
+            <li>Highlighting 🚥</li>
             <li>Answer Validation ✅</li>
             <li>Timer ⏰</li>
         </ul>

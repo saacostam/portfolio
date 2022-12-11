@@ -17,7 +17,7 @@ export default {
     ProjectVue
   },
   data(){
-    const nProjects = 9;
+    const nProjects = 12;
     const sortedProjects = projects.sort(function(a,b){
       return b.rating - a.rating;
     });

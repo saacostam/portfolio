@@ -7,6 +7,7 @@ import SlipperySlope from '@/views/projects/SlipperySlope.vue'
 import Sudoku from '@/views/projects/Sudoku.vue'
 import DDDMusicVisualizer from '@/views/projects/DDDMusicVisualizer.vue'
 import TuneCode from '@/views/projects/TuneCode.vue'
+import MusicVisualizer from '@/views/projects/MusicVisualizer.vue'
 
 import Test from '@/views/projects/Test.vue'
 
@@ -50,6 +51,11 @@ const routes = [{
         path : '/tune-code',
         name: 'TuneCode',
         component: TuneCode,
+    },
+    {
+        path : '/music-visualizer',
+        name: 'MusicVisualizer',
+        component: MusicVisualizer,
     },
 
 

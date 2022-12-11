@@ -13,7 +13,7 @@ const projects = [
         name: '👾 Tetris',
         desc: 'A Tetris clone built using Vue',
         tech: ['game', 'frontend', 'vue'],
-        rating: 3.5,
+        rating: 3.3,
         image: 'img/tetris.png',
         link: '/vanilla-js-tetris',
     },
@@ -79,6 +79,15 @@ const projects = [
         rating : 2.5,
         image: 'img/sudoku.png',
         link: '/sudoku',
+    },
+    {
+        id: 9,
+        name : '🖼 Music Visualizer',
+        desc : 'a 3-band frequency-based visualizer that uses uses audio API analysis.',
+        tech : ['frontend', 'audio API', 'canvas'],
+        rating: 3.5,
+        image : 'img/musicvisualizer.png',
+        link : '/music-visualizer',
     }
 ]
 
