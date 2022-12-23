@@ -8,6 +8,7 @@ import Sudoku from '@/views/projects/Sudoku.vue'
 import DDDMusicVisualizer from '@/views/projects/DDDMusicVisualizer.vue'
 import TuneCode from '@/views/projects/TuneCode.vue'
 import MusicVisualizer from '@/views/projects/MusicVisualizer.vue'
+import MedirecVue from '@/views/projects/Medirec.vue'
 
 import Test from '@/views/projects/Test.vue'
 
@@ -54,8 +55,13 @@ const routes = [{
     },
     {
         path : '/music-visualizer',
-        name: 'MusicVisualizer',
-        component: MusicVisualizer,
+        name : 'MusicVisualizer',
+        component : MusicVisualizer,
+    },
+    {
+        path : '/medirec',
+        name : 'Medirec',
+        component : MedirecVue
     },
 
 

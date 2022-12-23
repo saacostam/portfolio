@@ -83,11 +83,20 @@ const projects = [
     {
         id: 9,
         name : '🖼 Music Visualizer',
-        desc : 'a 3-band frequency-based visualizer that uses uses audio API analysis.',
+        desc : 'A 3-band frequency-based visualizer that uses uses audio API analysis.',
         tech : ['frontend', 'audio API', 'canvas'],
         rating: 3.5,
         image : 'img/musicvisualizer.png',
         link : '/music-visualizer',
+    },
+    {
+        id: 10,
+        name : '🩺 Medirec',
+        desc : 'Application that keeps track of medical files and shares them with doctors',
+        tech : ['frontend', 'vue', 'api'],
+        rating: 3.9,
+        image : 'img/medirec.png',
+        link : '/medirec',
     }
 ]
 
