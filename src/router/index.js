@@ -79,7 +79,6 @@ const router = createRouter({
 
 router.beforeEach(function (transition) {
     window.scrollTo(0, 0)
-    transition.next()
 })
 
 export default router
