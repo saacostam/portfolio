@@ -1,7 +1,7 @@
 <template>
     <div id="medirec" class="container bg-white my-3 border" style="max-width: 700px">
         <h4 class="text-center my-4">Medirec 🩺</h4>
-        <p>MediRec was a web-based application that enables users to keep track of medical files and share them with doctors. It was built as a project for the Software Engineering II class (2021-II).</p>
+        <p>MediRec is a web-based application that enables users to keep track of medical files and share them with doctors. It was built as a project for the Software Engineering II class (2021-II).</p>
 
         <div class="d-flex justify-content-center">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/AFpzOihtsvs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
