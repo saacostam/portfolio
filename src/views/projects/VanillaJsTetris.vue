@@ -18,19 +18,19 @@
             </div>
             <div class="menu">
                 <div class="preview">
-                    <h5>PREVIEW</h5>
+                    <h5 class="text-white">PREVIEW</h5>
                     <div class="preview-img">
-                        <img :src="`img/vanilla-js-tetris/${this.nextTetromino}.png`">
+                        <img :src="`img/vanilla-js-tetris/${this.nextTetromino}.png`" style="filter: grayscale(100%);">
                     </div>
                 </div>
                 <div class="score">
-                    <h5>SCORE</h5>
+                    <h5 class="text-white">SCORE</h5>
                     {{this.score}}
                 </div>
                 <div class="controls">
-                    <h5>CONTROLS <i class="bi bi-keyboard"></i></h5>
-                    <div>Keys - Move</div>
-                    <div>Z - Rotate</div>
+                    <h5 class="text-white">CONTROLS <i class="bi bi-keyboard"></i></h5>
+                    <div class="text-white">Keys - Move</div>
+                    <div class="text-white">Z - Rotate</div>
                 </div>
                 <div class="preview">
                     <button id="pause" @click="togglePause" v-if="this.state === 'running'">PAUSE</button>
@@ -40,8 +40,8 @@
             </div>
         </div>
         <div class="game-menu" v-else>
-            <h1>TETRIS <i class="bi bi-joystick"></i></h1>
-            <div class="menu-message">Press <span style="color: var(--orange)">start</span>!</div>
+            <h1 class="text-white">TETRIS <i class="bi bi-joystick"></i></h1>
+            <div class="menu-message">Press <span style="color: white; font-weight: 500;">start</span>!</div>
             <div id="start" @click="setGame">START</div>
             <div class="text-muted text-center">*Keyboard needed!</div>
         </div>
@@ -85,7 +85,7 @@ export default {
             } else if (char == "b") {
                 return "var(--blue)";
             } else if (char == "t") {
-                return "#fa9451";
+                return "var(--white)";
             }else{
                 return 'var(--orange)';
             }
