@@ -6,7 +6,7 @@
         <div class="d-block d-lg-flex flex-row my-4 align-items-center">
           <img src="img/profile/viking.png" alt="Profile Image of Santiago Acosta Meza" style="max-width: 250px" class="d-block mx-auto rounded rounded-circle">
           <div class="flex-fill p-2">
-            <h3 class="mx-auto my-4 font-weight-light">A software engineering student, interested in full-stack web development.</h3>
+            <h3 class="mx-auto my-4 font-weight-light">A software engineering student, interested in full-stack web development and music.</h3>
           </div>
         </div>
 
