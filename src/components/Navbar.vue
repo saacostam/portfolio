@@ -70,8 +70,8 @@ li svg{
     transition: calc(var(--transition-speed)/2) ease;
 }
 li:hover a, li:hover svg{
-    color: var(--orange);
-    fill: var(--orange);
+    color: white;
+    fill: white;
     transform: scale(1.1);
 }
 </style>
