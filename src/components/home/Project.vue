@@ -1,5 +1,5 @@
 <template>
-    <div class="project col-12 col-sm-6 col-lg-4">
+    <div class="project col-12 col-md-6 col-lg-4">
         <div class="myCard" @click="goTo">
             <div class="mask">
                 <h2>{{project.name}}</h2>
@@ -7,9 +7,9 @@
             </div>
             <div class="p-4">
                 <img :src="`${project.image}`" :alt="project.name" class="img-fluid p-3" style="border-radius: 2rem;">
-                <h2>{{project.name}}</h2>
+                <h2 class="text-white">{{project.name}}</h2>
                 <div class="tech">
-                    <span v-for="technology in project.tech" :key="technology">{{technology.toUpperCase()}}</span>
+                    <span v-for="technology in project.tech" :key="technology" class="p-1">{{technology.toUpperCase()}}</span>
                 </div>
             </div>
         </div>
@@ -41,10 +41,10 @@ export default {
     transition: transform 0.5s ease;
     cursor:pointer;
 
-    background: -webkit-linear-gradient(160deg, var(--blue) 40%, white 40%);
-    background: -o-linear-gradient(160deg, var(--blue) 40%, white 40%);
-    background: -moz-linear-gradient(160deg, var(--blue) 40%, white 40%);
-    background: linear-gradient(160deg, var(--blue) 40%, white 40%);
+    background: -webkit-linear-gradient(160deg, var(--blue) 40%, #464646 40%);
+    background: -o-linear-gradient(160deg, var(--blue) 40%, #464646 40%);
+    background: -moz-linear-gradient(160deg, var(--blue) 40%, #464646 40%);
+    background: linear-gradient(160deg, var(--blue) 40%, #464646 40%);
 }
 .myCard .mask{
     transform-origin: top;

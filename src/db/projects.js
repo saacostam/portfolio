@@ -7,6 +7,7 @@ const projects = [
         rating: 4.3,
         image: 'img/fake-store.png',
         link: 'https://saacostam.github.io/fake-store/#/explore',
+        category: 'dev',
     },
     {
         id: 1,
@@ -16,6 +17,7 @@ const projects = [
         rating: 3.3,
         image: 'img/tetris.png',
         link: '/vanilla-js-tetris',
+        category: 'game'
     },
     {
         id: 2,
@@ -25,6 +27,7 @@ const projects = [
         rating: 4.0,
         image: 'img/piano-roll.png',
         link: '/piano-roll',
+        category: 'music'
     },
     {
         id:3,
@@ -33,7 +36,8 @@ const projects = [
         tech: ['game', 'frontend', 'vue', 'algorithms'],
         rating: 2.2,
         image: 'img/random-maze-generator.png',
-        link: '/random-maze-generator'
+        link: '/random-maze-generator',
+        category: 'game'
     },
     {
         id:4,
@@ -42,7 +46,8 @@ const projects = [
         tech: ['game', 'frontend', 'canvas'],
         rating: 3.6,
         image: 'img/slippery-slope.png',
-        link: '/slippery-slope'
+        link: '/slippery-slope',
+        category: 'game'
     },
     {
         id:5,
@@ -51,7 +56,8 @@ const projects = [
         tech: ['frontend', 'vue', 'backend', 'nodejs', 'mongodb'],
         rating: 4.6,
         image: 'img/mem.png',
-        link: 'https://mem.onrender.com/#/login'
+        link: 'https://mem.onrender.com/#/login',
+        category: 'dev',
     },
     {
         id:6,
@@ -60,7 +66,8 @@ const projects = [
         tech: ['frontend', 'vue', 'antlr', 'audio API'],
         rating: 4.6,
         image: 'img/tunecode.png',
-        link: '/tune-code'
+        link: '/tune-code',
+        category: 'music'
     },
     {
         id:7,
@@ -70,6 +77,7 @@ const projects = [
         rating : 4.0,
         image: 'img/3dmusicvisualizer.png',
         link: '/3d-music-visualizer/',
+        category: 'music',
     },
     {
         id:8,
@@ -79,6 +87,7 @@ const projects = [
         rating : 2.5,
         image: 'img/sudoku.png',
         link: '/sudoku',
+        category: 'game',
     },
     {
         id: 9,
@@ -88,6 +97,7 @@ const projects = [
         rating: 3.5,
         image : 'img/musicvisualizer.png',
         link : '/music-visualizer',
+        category: 'music',
     },
     {
         id: 10,
@@ -97,6 +107,17 @@ const projects = [
         rating: 3.9,
         image : 'img/medirec.png',
         link : '/medirec',
+        category: 'dev',
+    },
+    {
+        id: 11,
+        name : '🎵 Lalu',
+        desc : 'Spotify-like application for music streaming',
+        tech : ['frontend', 'vue', 'audio'],
+        rating: 4.4,
+        image : 'img/lalu.png',
+        link : '/lalu',
+        category: 'dev',
     }
 ]
 

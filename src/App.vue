@@ -23,13 +23,12 @@ export default{
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
   --white: white;
-  --blue: #112B3C;
-  --orange: #F66B0E;
-  --black: #2C3333;
+  --blue: #232323;
+  --orange: #232323;
   --transition-speed: 500ms;
 }
 body{
-  background-color: #f1f5f8;
+  background-color: #2f2f2f;
 }
 #navbar{
   width: 4rem;
@@ -44,5 +43,9 @@ body{
 }
 #brand{
   height: 4rem;
+}
+*{
+  font-weight: 300;
+  color: white;
 }
 </style>

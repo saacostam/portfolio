@@ -9,6 +9,9 @@ import DDDMusicVisualizer from '@/views/projects/DDDMusicVisualizer.vue'
 import TuneCode from '@/views/projects/TuneCode.vue'
 import MusicVisualizer from '@/views/projects/MusicVisualizer.vue'
 import MedirecVue from '@/views/projects/Medirec.vue'
+import Projects from '@/views/Projects.vue'
+import Games from '@/views/Games.vue'
+import Lalu from '@/views/projects/Lalu.vue';
 
 import Test from '@/views/projects/Test.vue'
 
@@ -17,6 +20,16 @@ const routes = [{
         alias: '/home',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/projects',
+        name: 'Projects',
+        component: Projects,
+    },
+    {
+        path: '/games',
+        name: 'Games',
+        component: Games,
     },
     {
         path: '/vanilla-js-tetris',
@@ -63,8 +76,11 @@ const routes = [{
         name : 'Medirec',
         component : MedirecVue
     },
-
-
+    {
+        path: '/lalu',
+        name: 'Lalu',
+        component: Lalu,
+    },
     {
         path: '/test',
         name: 'Test',
