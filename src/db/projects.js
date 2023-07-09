@@ -108,6 +108,16 @@ const projects = [
         image : 'img/medirec.png',
         link : '/medirec',
         category: 'dev',
+    },
+    {
+        id: 11,
+        name : '🎵 Lalu',
+        desc : 'Spotify-like application for music streaming',
+        tech : ['frontend', 'vue', 'audio'],
+        rating: 4.4,
+        image : 'img/lalu.png',
+        link : '/lalu',
+        category: 'dev',
     }
 ]
 
