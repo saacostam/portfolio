@@ -118,6 +118,16 @@ const projects = [
         image : 'img/lalu.png',
         link : '/lalu',
         category: 'dev',
+    },
+    {
+        id: 12,
+        name : '🔌 Signal Grid',
+        desc : 'Game similar to classic piping puzzles',
+        tech : ['frontend', 'canvas', 'game'],
+        rating: 2.4,
+        image : 'img/signal-grid.png',
+        link : 'https://saacostam.github.io/static-websites/signal-grid/',
+        category: 'game',
     }
 ]
 
