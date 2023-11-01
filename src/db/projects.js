@@ -54,7 +54,7 @@ const projects = [
         name: '🧠 mem',
         desc: 'A card-based studying application for students',
         tech: ['frontend', 'vue', 'backend', 'nodejs', 'mongodb'],
-        rating: 4.6,
+        rating: 4.2,
         image: 'img/mem.png',
         link: 'https://mem.onrender.com/#/login',
         category: 'dev',
@@ -128,6 +128,16 @@ const projects = [
         image : 'img/signal-grid.png',
         link : 'https://saacostam.github.io/static-websites/signal-grid/',
         category: 'game',
+    },
+    {
+        id: 13,
+        name : '🧮 PI with Montecarlo Method',
+        desc : 'Calculating PI with Montecarlo Method',
+        tech : ['frontend', 'canvas', 'math'],
+        rating: 1.0,
+        image : 'img/montecarlo-pi.png',
+        link : '/montecarlo-circle',
+        category: 'dev',
     }
 ]
 

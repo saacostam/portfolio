@@ -12,6 +12,7 @@ import MedirecVue from '@/views/projects/Medirec.vue'
 import Projects from '@/views/Projects.vue'
 import Games from '@/views/Games.vue'
 import Lalu from '@/views/projects/Lalu.vue';
+import MontecarloCircle from '@/views/projects/MontecarloCircle.vue';
 
 import Test from '@/views/projects/Test.vue'
 
@@ -80,6 +81,11 @@ const routes = [{
         path: '/lalu',
         name: 'Lalu',
         component: Lalu,
+    },
+    {
+        path: '/montecarlo-circle',
+        name: 'MontercarloCircle',
+        component: MontecarloCircle,
     },
     {
         path: '/test',
