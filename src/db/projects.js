@@ -138,6 +138,16 @@ const projects = [
         image : 'img/montecarlo-pi.png',
         link : '/montecarlo-circle',
         category: 'dev',
+    },
+    {
+      id: 14,
+      name: 'Bio-Rastro',
+      desc: 'Game created to bring visibility to Chingaza paramo',
+      tech: ['game', 'canvas', 'excaliburjs'],
+      rating: 4.0,
+      image: 'img/signal-grid.png',
+      link: 'saacostam.github.io/bio-rastro',
+      category: 'game',
     }
 ]
 
