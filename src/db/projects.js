@@ -142,11 +142,11 @@ const projects = [
     {
       id: 14,
       name: 'Bio-Rastro',
-      desc: 'Game created to bring visibility to Chingaza paramo',
+      desc: 'Game created to bring visibility to the biodiversity of the Chingaza paramo',
       tech: ['game', 'canvas', 'excaliburjs'],
       rating: 4.0,
-      image: 'img/signal-grid.png',
-      link: 'saacostam.github.io/bio-rastro',
+      image: 'img/bio-rastro.png',
+      link: 'https://saacostam.github.io/bio-rastro',
       category: 'game',
     }
 ]
